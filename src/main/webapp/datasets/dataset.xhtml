@@ -6,67 +6,67 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                    template="./../templates/mainTemplate.xhtml">
+                    template="/templates/mainTemplate.xhtml">
 
         <ui:define name="center">
             Get the number of DataSet available:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/count">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/count
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/count" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/count
             </a>
             <br></br><br></br>
             Get all DataSet available:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/
             </a>
             <br></br><br></br>
             Get one DataSet by Id:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/1">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/1
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/1" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/1
             </a>
             <br></br><br></br>
             Get from/to DataSets by Id:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/1/3">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/1/3
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/1/3" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/1/3
             </a>
             <br></br><br></br>
             Get DataSets by Name (the dataset with name: Taxonomy):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/name/Taxonomy">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/name/Taxonomy
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/name/Taxonomy" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/name/Taxonomy
             </a>
             <br></br><br></br>
             Get DataSets by Name using % (all datasets with o):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/name/%25o%25">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/name/%25o%25
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/name/%25o%25" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/name/%25o%25
             </a>
             <br></br><br></br>
             Get DataSets by Name using % and negative selection (all datasets without o):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/noname/%25o%25">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/noname/%25o%25
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/noname/%25o%25" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/noname/%25o%25
             </a>
             <br></br><br></br>
             Get DataSets by Status (all datasets with status: inserted):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/status/inserted">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/status/inserted
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/status/inserted" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/status/inserted
             </a>
             <br></br><br></br>
             Get DataSets by Status using % (all datasets with e):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/status/%25e%25">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/status/%25e%25
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/status/%25e%25" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/status/%25e%25
             </a>
             <br></br><br></br>
             Get DataSets by status using a negative selection (all datasets with status is not: inserted):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/nostatus/inserted">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/dataset/nostatus/inserted
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/nostatus/inserted" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/dataset/nostatus/inserted
             </a>
             <br></br><br></br>
         </ui:define>
