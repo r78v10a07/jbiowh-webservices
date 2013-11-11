@@ -13,6 +13,8 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyPMID;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation;
+import org.jbiowhpersistence.datasets.taxonomy.search.SearchTaxonomy;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
  * This class is the Taxonomy webservice
@@ -25,11 +27,8 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation;
 @Path("taxonomy")
 public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
 
-    private final HashMap parm;
-
     public TaxonomyFacadeREST() {
         super(Taxonomy.class);
-        parm = new HashMap();
     }
 
     @GET
@@ -86,19 +85,6 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
     }
 
     @GET
-    @Path("taxid/{taxid}")
-    @Produces({"application/xml", "application/json"})
-    public Taxonomy findTaxId(@PathParam("taxid") Long taxid) {
-        parm.clear();
-        parm.put("taxId", taxid);
-        List<Taxonomy> taxs = ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuery("Taxonomy.findByTaxId", parm);
-        if (!taxs.isEmpty()) {
-            return taxs.get(0);
-        }
-        return null;
-    }
-
-    @GET
     @Path("taxid/{taxid}/synonym")
     @Produces({"application/xml", "application/json"})
     public List<TaxonomySynonym> findSynonymByTaxId(@PathParam("taxid") Long taxid) {
@@ -144,23 +130,6 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
     }
 
     @GET
-    @Path("synonym/{synonym}")
-    @Produces({"application/xml", "application/json"})
-    public List<Taxonomy> findBySynonym(@PathParam("synonym") String synonym) {
-        parm.clear();
-        parm.put("synonym", synonym.toUpperCase());
-        List<Long> taxsWID = ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuery("Taxonomy.findTaxonomyWIDBySynonym", parm);
-        if (!taxsWID.isEmpty()) {
-            List<Taxonomy> taxs = new ArrayList();
-            for (Long id : taxsWID) {
-                taxs.add(super.find(id));
-            }
-            return taxs;
-        }
-        return new ArrayList();
-    }
-
-    @GET
     @Path("count")
     @Produces("text/plain")
     public String countREST() {
@@ -172,6 +141,11 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
         HashMap<Class, Object> controllers = new HashMap();
         controllers.put(TaxonomyJpaController.class, new TaxonomyJpaController(getEntityManager().getEntityManagerFactory()));
         return controllers;
+    }
+
+    @Override
+    protected JBioWHSearch getSearch() {
+        return new SearchTaxonomy();
     }
 
 }

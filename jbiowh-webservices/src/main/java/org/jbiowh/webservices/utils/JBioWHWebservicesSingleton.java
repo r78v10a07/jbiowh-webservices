@@ -33,6 +33,7 @@ public class JBioWHWebservicesSingleton {
     private String server;
 
     private JBioWHWebservicesSingleton() {
+        server = null;
     }
 
     /**
@@ -75,7 +76,7 @@ public class JBioWHWebservicesSingleton {
                 Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        VerbLogger.getInstance().setLevel(VerbLogger.getInstance().ERROR);
+        VerbLogger.getInstance().setLevel(VerbLogger.getInstance().INFO);
         return JBioWHPersistence.getInstance().getWHEntityManager();
     }
 

@@ -21,6 +21,7 @@ import org.jbiowhpersistence.datasets.ontology.entities.OntologyToConsider;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologyXRef;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologyhasOntologySynonym;
 import org.jbiowhpersistence.datasets.ontology.search.SearchOntology;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
  * This class is the Ontology webservice
@@ -33,11 +34,8 @@ import org.jbiowhpersistence.datasets.ontology.search.SearchOntology;
 @Path("ontology")
 public class OntologyFacadeREST extends AbstractFacade<Ontology> {
 
-    private final HashMap parm;
-
     public OntologyFacadeREST() {
         super(Ontology.class);
-        parm = new HashMap();
     }
 
     @GET
@@ -119,25 +117,16 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         }
         return new ArrayList();
     }
-    
+
     @GET
     @Path("{id}/xref")
     @Produces({"application/xml", "application/json"})
     public List<OntologyXRef> findXRefById(@PathParam("id") Long id) {
         Ontology ont = super.find(id);
-        if (ont != null && ont.getOntologyXRef()!= null) {
+        if (ont != null && ont.getOntologyXRef() != null) {
             return new ArrayList(ont.getOntologyXRef());
         }
         return new ArrayList();
-    }
-
-    @GET
-    @Path("goid/{id}")
-    @Produces({"application/xml", "application/json"})
-    public List<Ontology> findByGOID(@PathParam("id") String id) {
-        parm.clear();
-        parm.put("id", id.toUpperCase());
-        return ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
     }
 
     @GET
@@ -219,7 +208,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         }
         return listR;
     }
-    
+
     @GET
     @Path("goid/{id}/toconsider")
     @Produces({"application/xml", "application/json"})
@@ -229,13 +218,13 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         parm.put("id", id.toUpperCase());
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
-            if (o.getOntologyToConsider()!= null) {
+            if (o.getOntologyToConsider() != null) {
                 listR.addAll(o.getOntologyToConsider().values());
             }
         }
         return listR;
     }
-    
+
     @GET
     @Path("goid/{id}/xref")
     @Produces({"application/xml", "application/json"})
@@ -245,33 +234,11 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         parm.put("id", id.toUpperCase());
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
-            if (o.getOntologyXRef()!= null) {
+            if (o.getOntologyXRef() != null) {
                 listR.addAll(o.getOntologyXRef());
             }
         }
         return listR;
-    }
-
-    @GET
-    @Path("search/{search}")
-    @Produces({"application/xml", "application/json"})
-    public List<Ontology> findBySearch(@PathParam("search") String search) {
-        List<Ontology> onts = new ArrayList();
-        try {
-            onts = new SearchOntology().search(search, null);
-        } catch (SQLException ex) {
-            Logger.getLogger(OntologyFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return onts;
-    }
-
-    @GET
-    @Path("altid/{id}")
-    @Produces({"application/xml", "application/json"})
-    public List<Ontology> findByAltID(@PathParam("id") String id) {
-        parm.clear();
-        parm.put("altId", id.toUpperCase());
-        return ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findByAltId", parm);
     }
 
     @GET
@@ -286,6 +253,11 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         HashMap<Class, Object> controllers = new HashMap();
         controllers.put(OntologyJpaController.class, new OntologyJpaController(getEntityManager().getEntityManagerFactory()));
         return controllers;
+    }
+
+    @Override
+    protected JBioWHSearch getSearch() {
+        return new SearchOntology();
     }
 
 }

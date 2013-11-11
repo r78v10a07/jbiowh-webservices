@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
  * This class is the DataSet webservice
@@ -21,11 +22,9 @@ import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 @Stateless
 @Path("dataset")
 public class DataSetFacadeREST extends AbstractFacade<DataSet> {
-    private final HashMap parm;
 
     public DataSetFacadeREST() {
         super(DataSet.class);
-        parm = new HashMap();
     }
 
     @GET
@@ -97,6 +96,11 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
         HashMap<Class, Object> controllers = new HashMap();
         controllers.put(DataSetJpaController.class, new DataSetJpaController(getEntityManager().getEntityManagerFactory()));
         return controllers;
+    }
+
+    @Override
+    protected JBioWHSearch getSearch() {
+        return null;
     }
 
 }

@@ -5,10 +5,12 @@
  */
 package org.jbiowh.webservices.beans;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
@@ -19,11 +21,9 @@ import org.jbiowhpersistence.utils.controller.AbstractController;
  *
  * @author roberto
  */
-@ManagedBean
+@Named(value = "dataSets")
 @SessionScoped
-public class DataSetBean extends AbstractController {
-
-    private List<DataSet> datasets;
+public class DataSetBean extends AbstractController implements Serializable {
 
     /**
      * Creates a new instance of DataSetBean
@@ -31,11 +31,13 @@ public class DataSetBean extends AbstractController {
     public DataSetBean() {
     }
 
+    @Produces
     public List<DataSet> getDatasets() {
         return ((DataSetJpaController) getController(DataSetJpaController.class)).findDataSetEntities();
     }
-    
-    public String getServer(){
+
+    @Produces
+    public String getServer() {
         return JBioWHWebservicesSingleton.getInstance().getServer();
     }
 

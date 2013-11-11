@@ -6,74 +6,74 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                    template="./../templates/mainTemplate.xhtml">
+                    template="/templates/mainTemplate.xhtml">
 
 
         <ui:define name="center">
             Get the number of Taxonomies available:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/count">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/count
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/count" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/count
             </a>
             <br></br><br></br>
             Get one Taxonomy by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522
             </a>
             <br></br><br></br>
             Get from/to Taxonomies by range:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1/3">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1/3
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1/3" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1/3
             </a>
             <br></br><br></br>
             Get the synonyms by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522/synonym">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522/synonym
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522/synonym" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522/synonym
             </a>
             <br></br><br></br>
             Get the PMID by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522/pmid">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522/pmid
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522/pmid" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522/pmid
             </a>
             <br></br><br></br>
             Get the Unparsed citations by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522/unparse">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/1825522/unparse
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522/unparse" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1825522/unparse
             </a>
             <br></br><br></br>
             Get the Taxonomy by TaxId:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/taxid/9606
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/9606
             </a>
             <br></br><br></br>
             Get the synonyms by TaxId:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/synonym">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/synonym
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/synonym" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/synonym
             </a>
             <br></br><br></br>
             Get the PMID by TaxId:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/282817365/pmid">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/pmid
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/282817365/pmid" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/pmid
             </a>
             <br></br><br></br>
             Get the Unparsed citations by TaxId:<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/282817365/unparse">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/unparse
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/282817365/unparse" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/9006/unparse
             </a>
             <br></br><br></br>
-            Get Taxonomies by synonym  using % (search all Homo):<br></br>
+            Search Taxonomies by string using % (search all "Homo*"):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/synonym/homo%25">
-                http://#{dataSetBean.server}/jbiowh-webservices/webservices/taxonomy/synonym/homo%25
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/search/homo%25" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/search/homo%25
             </a>
             <br></br><br></br>
         </ui:define>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+	<url-mapping id="index">
+		<pattern value="/" />
+		<view-id value="/faces/index.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="dataset">
+		<pattern value="/dataset" />
+		<view-id value="/faces/datasets/dataset.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="taxonomy">
+		<pattern value="/taxonomy" />
+		<view-id value="/faces/datasets/taxonomy.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="ontology">
+		<pattern value="/ontology" />
+		<view-id value="/faces/datasets/ontology.xhtml" />
+	</url-mapping>
+
+</pretty-config>
