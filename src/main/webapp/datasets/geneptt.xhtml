@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./../templates/mainTemplate.xhtml">
+
+            <ui:define name="center">
+                Get the number of GenePTT available:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/count" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/count
+                </a>
+                <br></br><br></br>
+                Get one GenePTT by ProteinGi:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/158341508" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/158341508
+                </a>                
+                <br></br><br></br>
+                Get from/to GenePTT by range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/1/3">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/1/3
+                </a>
+                <br></br><br></br>
+                Get GenePTTs from a PTT file:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399
+                </a>
+                <br></br><br></br>
+                Get GenePTTs from a PTT file using from/to range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000
+                </a>
+                <br></br><br></br>
+                Get Genes from a PTT file:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/gene">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/genes
+                </a>
+                <br></br><br></br>
+                Get Genes from a PTT file using from/to range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000/gene">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000/genes
+                </a>
+                <br></br><br></br>
+                Search GenePTTs  by string using % (Search over the fields: ProteinGi, PTT File name, 
+                Gene symbol, locustag, 
+                in this order. Use %25 for the wildcard):<br></br><br></br>
+                &nbsp;&nbsp;&nbsp;
+                ProteinGi:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/158341604" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/158341604
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                PTT File name:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/NC_00139%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/NC_01739%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Gene symbol:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/4hbD" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/4hbD
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Locustag:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/AM1_H0113" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/AM1_H0113
+                </a><br></br>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
