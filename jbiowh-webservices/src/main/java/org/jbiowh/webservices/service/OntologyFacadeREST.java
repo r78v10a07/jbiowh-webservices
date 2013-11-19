@@ -1,16 +1,14 @@
 package org.jbiowh.webservices.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.ontology.controller.OntologyJpaController;
 import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologyAlternativeId;
@@ -130,12 +128,23 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     }
 
     @GET
+    @Path("{id}/geneinfo")
+    @Produces({"application/xml", "application/json"})
+    public List<GeneInfo> findGeneInfoById(@PathParam("id") String id) {
+        Ontology ont = super.find(id);
+        if (ont != null && ont.getGeneInfo() != null) {
+            return new ArrayList(ont.getGeneInfo());
+        }
+        return new ArrayList();
+    }
+
+    @GET
     @Path("goid/{id}/altid")
     @Produces({"application/xml", "application/json"})
     public List<OntologyAlternativeId> findAlternativeIdByGOId(@PathParam("id") String id) {
         List<OntologyAlternativeId> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyAlternativeId() != null) {
@@ -151,7 +160,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     public List<OntologyIsA> findIsAByGOId(@PathParam("id") String id) {
         List<OntologyIsA> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyIsA() != null) {
@@ -167,7 +176,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     public List<OntologyPMID> findPMIDByGOId(@PathParam("id") String id) {
         List<OntologyPMID> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyPMID() != null) {
@@ -183,7 +192,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     public List<OntologyRelation> findRelationByGOId(@PathParam("id") String id) {
         List<OntologyRelation> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyRelation() != null) {
@@ -199,7 +208,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     public List<OntologyhasOntologySynonym> findSynonymByGOId(@PathParam("id") String id) {
         List<OntologyhasOntologySynonym> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyhasOntologySynonym() != null) {
@@ -215,7 +224,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     public List<OntologyToConsider> findToConsiderByGOId(@PathParam("id") String id) {
         List<OntologyToConsider> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyToConsider() != null) {
@@ -231,11 +240,27 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     public List<OntologyXRef> findXRefByGOId(@PathParam("id") String id) {
         List<OntologyXRef> listR = new ArrayList();
         parm.clear();
-        parm.put("id", id.toUpperCase());
+        parm.put("id", id);
         List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getOntologyXRef() != null) {
                 listR.addAll(o.getOntologyXRef());
+            }
+        }
+        return listR;
+    }
+
+    @GET
+    @Path("goid/{id}/genes")
+    @Produces({"application/xml", "application/json"})
+    public List<GeneInfo> findGeneInfoByGOId(@PathParam("id") String id) {
+        List<GeneInfo> listR = new ArrayList();
+        parm.clear();
+        parm.put("id", id);
+        List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
+        for (Ontology o : onts) {
+            if (o.getGeneInfo() != null) {
+                listR.addAll(o.getGeneInfo());
             }
         }
         return listR;

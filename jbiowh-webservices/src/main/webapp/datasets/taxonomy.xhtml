@@ -1,10 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                     template="/templates/mainTemplate.xhtml">
 
@@ -74,6 +71,18 @@
             &nbsp;&nbsp;&nbsp;
             <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/search/homo%25" target="_blank">
                 http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/search/homo%25
+            </a>
+            <br></br><br></br>
+            Get Genes by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1000556/gene" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/1000556/gene
+            </a>
+            <br></br><br></br>
+            Get Genes by Tax Id (Example Tax id: 670, <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=670" target="_blank">Vibrio parahaemolyticus</a>):<br></br>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/670/gene" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/taxonomy/taxid/670/gene
             </a>
             <br></br><br></br>
         </ui:define>

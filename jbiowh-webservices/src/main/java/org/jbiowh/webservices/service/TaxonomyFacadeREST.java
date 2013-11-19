@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowhpersistence.datasets.gene.gene.controller.GeneInfoJpaController;
+import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.taxonomy.controller.TaxonomyJpaController;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyPMID;
@@ -85,16 +88,30 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
     }
 
     @GET
+    @Path("{id}/gene")
+    @Produces({"application/xml", "application/json"})
+    public List<GeneInfo> findGeneInfoById(@PathParam("id") Long id) {
+        Taxonomy tax = super.find(id);
+        if (tax != null) {
+            parm.clear();
+            parm.put("taxID", tax.getTaxId());
+            return ((GeneInfoJpaController) getController(GeneInfoJpaController.class)).useNamedQuery("GeneInfo.findByTaxID", parm);
+        }
+        return new ArrayList();
+    }
+
+    @GET
     @Path("taxid/{taxid}/synonym")
     @Produces({"application/xml", "application/json"})
     public List<TaxonomySynonym> findSynonymByTaxId(@PathParam("taxid") Long taxid) {
         parm.clear();
         parm.put("taxId", taxid);
-        List<Taxonomy> taxs = ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuery("Taxonomy.findByTaxId", parm);
-        if (!taxs.isEmpty()) {
-            if (taxs.get(0).getSynonym() != null) {
-                return new ArrayList(taxs.get(0).getSynonym().values());
+        try {
+            Taxonomy taxs = (Taxonomy) ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuerySingleResult("Taxonomy.findByTaxId", parm);
+            if (taxs.getSynonym() != null) {
+                return new ArrayList(taxs.getSynonym().values());
             }
+        } catch (NoResultException ex) {
         }
         return new ArrayList();
     }
@@ -105,11 +122,12 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
     public List<TaxonomyPMID> findPMIDByTaxId(@PathParam("taxid") Long taxid) {
         parm.clear();
         parm.put("taxId", taxid);
-        List<Taxonomy> taxs = ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuery("Taxonomy.findByTaxId", parm);
-        if (!taxs.isEmpty()) {
-            if (taxs.get(0).getPmid() != null) {
-                return new ArrayList(taxs.get(0).getPmid().values());
+        try {
+            Taxonomy taxs = (Taxonomy) ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuerySingleResult("Taxonomy.findByTaxId", parm);
+            if (taxs.getPmid() != null) {
+                return new ArrayList(taxs.getPmid().values());
             }
+        } catch (NoResultException ex) {
         }
         return new ArrayList();
     }
@@ -120,13 +138,23 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
     public List<TaxonomyUnParseCitation> findUnParseByTaxId(@PathParam("taxid") Long taxid) {
         parm.clear();
         parm.put("taxId", taxid);
-        List<Taxonomy> taxs = ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuery("Taxonomy.findByTaxId", parm);
-        if (!taxs.isEmpty()) {
-            if (taxs.get(0).getUnparse() != null) {
-                return new ArrayList(taxs.get(0).getUnparse());
+        try {
+            Taxonomy taxs = (Taxonomy) ((TaxonomyJpaController) getController(TaxonomyJpaController.class)).useNamedQuerySingleResult("Taxonomy.findByTaxId", parm);
+            if (taxs != null && taxs.getUnparse() != null) {
+                return new ArrayList(taxs.getUnparse());
             }
+        } catch (NoResultException ex) {
         }
         return new ArrayList();
+    }
+
+    @GET
+    @Path("taxid/{taxid}/gene")
+    @Produces({"application/xml", "application/json"})
+    public List<GeneInfo> findGeneInfoByTaxId(@PathParam("taxid") Long taxid) {
+        parm.clear();
+        parm.put("taxID", taxid);
+        return ((GeneInfoJpaController) getController(GeneInfoJpaController.class)).useNamedQuery("GeneInfo.findByTaxID", parm);
     }
 
     @GET
@@ -140,6 +168,7 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
     protected HashMap<Class, Object> createController() {
         HashMap<Class, Object> controllers = new HashMap();
         controllers.put(TaxonomyJpaController.class, new TaxonomyJpaController(getEntityManager().getEntityManagerFactory()));
+        controllers.put(GeneInfoJpaController.class, new GeneInfoJpaController(getEntityManager().getEntityManagerFactory()));
         return controllers;
     }
 
