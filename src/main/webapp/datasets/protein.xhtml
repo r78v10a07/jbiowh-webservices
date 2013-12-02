@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./../templates/mainTemplate.xhtml">
+
+            <ui:define name="center">
+                <br></br>
+                <h1>Protein access</h1>
+                <br></br>
+                Get the number of Proteins available:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/count" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/count
+                </a>
+                <br></br><br></br>
+                Get Protein by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/#{dataSets.proteinWID}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/#{dataSets.proteinWID}
+                </a>                
+                <br></br><br></br>
+                Get from/to Protein by range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/1/3">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/1/3
+                </a>
+                <br></br><br></br>   
+                Get Proteins by Name (040R_*):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/040R_%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/040R_%25
+                </a>                
+                <br></br><br></br>
+                Get Proteins by Accession (Q197A*):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/accession/Q197A%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/accession/Q197A%25
+                </a>                
+                <br></br><br></br>                
+                Search Proteins  by string using % (Search over the fields: name, EC, accession number
+                and complete name
+                in this order. Use %25 for the wildcard):<br></br><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Name (040R_*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/040R_%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/040R_%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                EC (3.*.*.89):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/3.%25.%25.89" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/3.%25.%25.89
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Accession Number (Q197A*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/Q197A%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/Q197A%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Complete Name (Uncharacterized*protein*Gp24*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/Uncharacterized%25protein%25Gp24%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/search/Uncharacterized%25protein%25Gp24%25
+                </a>
+                <br></br><br></br>
+                <h1>External data links</h1>
+                <h3>GeneInfo</h3>                  
+                Get GeneInfos by Protein id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/#{dataSets.proteinWID}/geneinfo" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/#{dataSets.proteinWID}/geneinfo
+                </a>                
+                <br></br><br></br>   
+                Get GeneInfos by Protein Name (040R_*):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/040R_%25/geneinfo" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/040R_%25/geneinfo
+                </a>                
+                <br></br><br></br> 
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

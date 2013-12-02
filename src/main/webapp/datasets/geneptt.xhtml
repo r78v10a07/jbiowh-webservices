@@ -8,6 +8,9 @@
         <ui:composition template="./../templates/mainTemplate.xhtml">
 
             <ui:define name="center">
+                <br></br>
+                <h1>GenePTT access</h1>
+                <br></br>
                 Get the number of GenePTT available:<br></br>
                 &nbsp;&nbsp;&nbsp;
                 <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/count" target="_blank">
@@ -16,8 +19,8 @@
                 <br></br><br></br>
                 Get one GenePTT by ProteinGi:<br></br>
                 &nbsp;&nbsp;&nbsp;
-                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/158341508" target="_blank">
-                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/158341508
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/#{dataSets.genePTTProteinGi}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/#{dataSets.genePTTProteinGi}
                 </a>                
                 <br></br><br></br>
                 Get from/to GenePTT by range:<br></br>
@@ -28,36 +31,24 @@
                 <br></br><br></br>
                 Get GenePTTs from a PTT file:<br></br>
                 &nbsp;&nbsp;&nbsp;
-                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399">
-                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504
                 </a>
                 <br></br><br></br>
                 Get GenePTTs from a PTT file using from/to range:<br></br>
                 &nbsp;&nbsp;&nbsp;
-                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000">
-                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/700077/744610">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/700077/744610
                 </a>
-                <br></br><br></br>
-                Get Genes from a PTT file:<br></br>
-                &nbsp;&nbsp;&nbsp;
-                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/gene">
-                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/genes
-                </a>
-                <br></br><br></br>
-                Get Genes from a PTT file using from/to range:<br></br>
-                &nbsp;&nbsp;&nbsp;
-                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000/gene">
-                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_001399/500/2000/genes
-                </a>
-                <br></br><br></br>
+                <br></br><br></br>                
                 Search GenePTTs  by string using % (Search over the fields: ProteinGi, PTT File name, 
                 Gene symbol, locustag, 
                 in this order. Use %25 for the wildcard):<br></br><br></br>
                 &nbsp;&nbsp;&nbsp;
                 ProteinGi:<br></br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/158341604" target="_blank">
-                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/158341604
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/#{dataSets.genePTTProteinGi}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/#{dataSets.genePTTProteinGi}
                 </a><br></br>
                 &nbsp;&nbsp;&nbsp;
                 PTT File name:<br></br>
@@ -76,7 +67,41 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/AM1_H0113" target="_blank">
                     http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/search/AM1_H0113
-                </a><br></br>
+                </a>
+                <br></br><br></br>
+                <h1>External data links</h1>
+                <h3>GeneInfo</h3>
+                Get Genes from a PTT file:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/geneinfo">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/geneinfo
+                </a>
+                <br></br><br></br>
+                Get Genes from a PTT file using from/to range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/700077/744610/geneinfo">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/700077/744610/geneinfo
+                </a>
+                <br></br><br></br>
+                <h3>Protein</h3>
+                Get the Proteins by ProteinGi:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/#{dataSets.genePTTProteinGi}/protein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/#{dataSets.genePTTProteinGi}/protein
+                </a>
+                <br></br><br></br>
+                Get Proteins from a PTT file:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/protein">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/protein
+                </a>
+                <br></br><br></br>
+                Get Proteins from a PTT file using from/to range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/700077/744610/protein">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneptt/chromosome/NC_009504/700077/744610/protein
+                </a>
+                <br></br><br></br>
             </ui:define>
 
         </ui:composition>

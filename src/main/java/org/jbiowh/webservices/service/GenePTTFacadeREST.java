@@ -14,6 +14,8 @@ import org.jbiowhpersistence.datasets.gene.genebank.controller.GeneBankCDSJpaCon
 import org.jbiowhpersistence.datasets.gene.genome.controller.GenePTTJpaController;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
 import org.jbiowhpersistence.datasets.gene.genome.search.SearchGenePTT;
+import org.jbiowhpersistence.datasets.protein.controller.ProteinJpaController;
+import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
@@ -41,21 +43,21 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
     }
 
     @GET
+    @Path("{id}/protein")
+    @Produces({"application/xml", "application/json"})
+    public Protein findProtein(@PathParam("id") Long id) {
+        GenePTT g = super.find(id);
+        if (g != null) {
+            return g.getProtein();
+        }
+        return null;
+    }
+
+    @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
     public List<GenePTT> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("{id}/geneinfo")
-    @Produces({"application/xml", "application/json"})
-    public GeneInfo findGeneInfoByProteinGi(@PathParam("id") Long id) {
-        GenePTT g = super.find(id);
-        if (g != null) {
-            return g.getGeneInfo();
-        }
-        return null;
     }
 
     @GET
@@ -72,7 +74,28 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
     }
 
     @GET
-    @Path("chromosome/{id}/gene")
+    @Path("chromosome/{id}/protein")
+    @Produces({"application/xml", "application/json"})
+    public List<Protein> findProteinByPTTFileName(@PathParam("id") String id) {
+        List<Protein> p = new ArrayList();
+        parm.clear();
+        parm.put("pTTFile", id);
+        try {
+            List<GenePTT> gs = ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPTTFile", parm);
+            if (gs != null) {
+                for (GenePTT g : gs) {
+                    if (g.getProtein() != null) {
+                        p.add(g.getProtein());
+                    }
+                }
+            }
+        } catch (NoResultException ex) {
+        }
+        return p;
+    }
+
+    @GET
+    @Path("chromosome/{id}/geneinfo")
     @Produces({"application/xml", "application/json"})
     public List<GeneInfo> findGeneByPTTFileName(@PathParam("id") String id) {
         List<GeneInfo> genes = new ArrayList();
@@ -91,7 +114,7 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
     }
 
     @GET
-    @Path("chromosome/{id}/{from}/{to}/gene")
+    @Path("chromosome/{id}/{from}/{to}/geneinfo")
     @Produces({"application/xml", "application/json"})
     public List<GeneInfo> findGeneByFileNameRange(@PathParam("id") String id, @PathParam("from") Integer from, @PathParam("to") Integer to) {
         List<GeneInfo> genes = new ArrayList();
@@ -109,6 +132,27 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         } catch (NoResultException ex) {
         }
         return genes;
+    }
+
+    @GET
+    @Path("chromosome/{id}/{from}/{to}/protein")
+    @Produces({"application/xml", "application/json"})
+    public List<Protein> findProteinByFileNameRange(@PathParam("id") String id, @PathParam("from") Integer from, @PathParam("to") Integer to) {
+        List<Protein> p = new ArrayList();
+        parm.clear();
+        parm.put("pTTFile", id);
+        parm.put("pFrom", from);
+        parm.put("pTo", to);
+        try {
+            List<GenePTT> ptts = ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
+            for (GenePTT g : ptts) {
+                if (g.getProtein() != null) {
+                    p.add(g.getProtein());
+                }
+            }
+        } catch (NoResultException ex) {
+        }
+        return p;
     }
 
     @GET
@@ -138,6 +182,7 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         HashMap<Class, Object> controllers = new HashMap();
         controllers.put(GenePTTJpaController.class, new GenePTTJpaController(getEntityManager().getEntityManagerFactory()));
         controllers.put(GeneBankCDSJpaController.class, new GeneBankCDSJpaController(getEntityManager().getEntityManagerFactory()));
+        controllers.put(ProteinJpaController.class, new ProteinJpaController(getEntityManager().getEntityManagerFactory()));
         return controllers;
     }
 

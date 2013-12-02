@@ -23,5 +23,20 @@
 		<pattern value="/ontology" />
 		<view-id value="/faces/datasets/ontology.xhtml" />
 	</url-mapping>
+        
+        <url-mapping id="gene">
+		<pattern value="/gene" />
+		<view-id value="/faces/datasets/gene.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="geneptt">
+		<pattern value="/geneptt" />
+		<view-id value="/faces/datasets/geneptt.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="protein">
+		<pattern value="/protein" />
+		<view-id value="/faces/datasets/protein.xhtml" />
+	</url-mapping>
 
 </pretty-config>
