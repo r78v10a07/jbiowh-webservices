@@ -7,6 +7,9 @@
 
 
         <ui:define name="center">
+            <br></br>
+            <h1>Ontology access</h1>
+            <br></br>
             Get the number of Ontologies available:<br></br>
             &nbsp;&nbsp;&nbsp;
             <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/count" target="_blank">
@@ -15,57 +18,15 @@
             <br></br><br></br>
             Get one Ontology by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
             &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/#{dataSets.ontologyWID}" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/#{dataSets.ontologyWID}
             </a>
             <br></br><br></br>
             Get from/to Ontologies by range:<br></br>
             &nbsp;&nbsp;&nbsp;
             <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/1/3">
                 http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/1/3
-            </a>
-            <br></br><br></br>
-            Get the Alternative Id by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/altid" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/altid
-            </a>
-            <br></br><br></br>
-            Get the IsA by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/isa" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/isa
-            </a>
-            <br></br><br></br>
-            Get the PMID by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/pmid" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/pmid
-            </a>
-            <br></br><br></br>
-            Get the Relations by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/relation" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/relation
-            </a>
-            <br></br><br></br>
-            Get the Synonyms by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/synonym" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/synonym
-            </a>
-            <br></br><br></br>
-            Get the ToConsider by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/toconsider" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/toconsider
-            </a>
-            <br></br><br></br>
-            Get the Xref by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/xref" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/2069819/xref
-            </a>
+            </a>            
             <br></br><br></br>
             Get Ontologies by GO ID (the % wilcard (%25) is available):<br></br>
             &nbsp;&nbsp;&nbsp;
@@ -73,59 +34,39 @@
                 http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25
             </a>
             <br></br><br></br>
-            Get the Alternative Id by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/altid" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/altid
-            </a>
-            <br></br><br></br>
-            Get the IsA by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/isa" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/isa
-            </a>
-            <br></br><br></br>
-            Get the PMID by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/pmid" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/pmid
-            </a>
-            <br></br><br></br>
-            Get the Relations by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/relation" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/relation
-            </a>
-            <br></br><br></br>
-            Get the Synonyms by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/synonym" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/synonym
-            </a>
-            <br></br><br></br>
-            Get the ToConsider by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/toconsider" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/toconsider
-            </a>
-            <br></br><br></br>
-            Get the Xref by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/xref" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:00000%25/xref
-            </a>
-            <br></br><br></br>
-            Get the Genes by GO Id:<br></br>
-            &nbsp;&nbsp;&nbsp;
-            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:0000017/genes" target="_blank">
-                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:0000017/genes
-            </a>
-            <br></br><br></br>
             Search the Ontologies by string (Search over the fields: GO ID, name, definition, comment, synonym, alternative id, in this order. Use %25 for the wildcard):<br></br>
             &nbsp;&nbsp;&nbsp;
             <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/search/%25human%25" target="_blank">
                 http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/search/%25human%25
             </a>
+            <br></br><br></br>
+            <h1>External data links</h1>
+            <h3>GeneInfo</h3>
+            Get the Genes by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/#{dataSets.ontologyWID}/geneinfo" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/#{dataSets.ontologyWID}/geneinfo
+            </a>
+            <br></br><br></br>
+            Get the Genes by GO Id:<br></br>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:0000011/geneinfo" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:0000011/geneinfo
+            </a>
+            <br></br><br></br>
+            <h3>Protein</h3>
+            Get the Proteins by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/#{dataSets.ontologyWID}/protein" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/#{dataSets.ontologyWID}/protein
+            </a>
+            <br></br><br></br>
+            Get the Proteins by GO Id:<br></br>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:0000011/protein" target="_blank">
+                http://#{dataSets.server}/jbiowh-webservices/webservices/ontology/goid/GO:0000011/protein
+            </a>
+            <br></br><br></br>
         </ui:define>
     </ui:composition>
 </html>

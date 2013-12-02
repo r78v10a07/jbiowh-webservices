@@ -47,15 +47,47 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
 }
 
+.ui-layout-north{
+    padding: 0em;
+    border: 0px solid #036fab !important;
+}
 
+.ui-layout-north .ui-layout-unit-content{
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.7)) repeat scroll 0 0 #C4C4C4;
+    color: #333333;
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.ui-layout-south .ui-layout-unit-content{
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;
+    color: #333333;
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.ui-menu, .ui-menu .ui-menu-child {
+    /*background:  -moz-radial-gradient(center , rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8)) repeat scroll 0 0 #C4C4C4;
+    /*background: -moz-linear-gradient(right , rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;*/
+    background: #ffffff;
+}
+
+.ui-widget-content {
+    border: 0px solid #A8A8A8;
+}
+
+.ui-layout-unit {
+    padding: 0em  !important;
+    visibility: hidden;
+}
