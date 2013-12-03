@@ -12,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
-import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**

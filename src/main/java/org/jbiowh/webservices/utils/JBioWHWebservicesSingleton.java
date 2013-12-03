@@ -57,7 +57,8 @@ public class JBioWHWebservicesSingleton {
      * @return the EntityManagerFactory from the JBioWHPersistence
      */
     public EntityManagerFactory getWHEntityManager() {
-        if (JBioWHPersistence.getInstance().getWHEntityManager() == null) {
+        if (JBioWHPersistence.getInstance().getWHEntityManager() == null
+                || !JBioWHPersistence.getInstance().getWHEntityManager().isOpen()) {
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
@@ -81,7 +82,7 @@ public class JBioWHWebservicesSingleton {
     }
 
     public String getServer() {
-        if (server == null){
+        if (server == null) {
             getWHEntityManager();
         }
         return server;

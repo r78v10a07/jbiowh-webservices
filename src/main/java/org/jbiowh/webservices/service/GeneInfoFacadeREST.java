@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
 import org.jbiowhpersistence.datasets.gene.gene.controller.GeneInfoJpaController;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.gene.search.SearchGeneInfo;
@@ -37,7 +38,7 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
     public GeneInfo find(@PathParam("id") Long id) {
         return super.find(id);
     }
-    
+
     @GET
     @Path("{id}/protein")
     @Produces({"application/xml", "application/json"})
@@ -45,6 +46,17 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         GeneInfo gene = super.find(id);
         if (gene != null && gene.getProtein() != null) {
             return new ArrayList(gene.getProtein());
+        }
+        return new ArrayList();
+    }
+
+    @GET
+    @Path("{id}/omim")
+    @Produces({"application/xml", "application/json"})
+    public List<OMIM> findOmimByID(@PathParam("id") Long id) {
+        GeneInfo gene = super.find(id);
+        if (gene != null && gene.getOmim() != null) {
+            return new ArrayList(gene.getOmim());
         }
         return new ArrayList();
     }
@@ -68,7 +80,7 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         }
         return null;
     }
-    
+
     @GET
     @Path("geneid/{id}/protein")
     @Produces({"application/xml", "application/json"})
@@ -85,6 +97,21 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         return new ArrayList();
     }
 
+    @GET
+    @Path("geneid/{id}/omim")
+    @Produces({"application/xml", "application/json"})
+    public List<OMIM> findOMIMByGeneID(@PathParam("id") Long id) {
+        parm.clear();
+        parm.put("geneID", id);
+        try {
+            GeneInfo gene = (GeneInfo) ((GeneInfoJpaController) getController(GeneInfoJpaController.class)).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
+            if (gene != null && gene.getOmim() != null) {
+                return new ArrayList(gene.getOmim());
+            }
+        } catch (NoResultException ex) {
+        }
+        return new ArrayList();
+    }
 
     @GET
     @Path("count")
