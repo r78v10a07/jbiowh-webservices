@@ -34,6 +34,11 @@
 		<view-id value="/faces/datasets/geneptt.xhtml" />
 	</url-mapping>
         
+        <url-mapping id="omim">
+		<pattern value="/omim" />
+		<view-id value="/faces/datasets/omim.xhtml" />
+	</url-mapping>
+        
         <url-mapping id="protein">
 		<pattern value="/protein" />
 		<view-id value="/faces/datasets/protein.xhtml" />

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./../templates/mainTemplate.xhtml">
+
+            <ui:define name="center">
+                <br></br>
+                <h1>OMIM access</h1>
+                <br></br>
+                Get the number of OMIMs available:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/count" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/count
+                </a>
+                <br></br><br></br>
+                Get one OMIM by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/#{dataSets.OMIMWID}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/#{dataSets.OMIMWID}
+                </a>
+                <br></br><br></br>
+                Get from/to OMIMs by range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/1/3">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/1/3
+                </a>
+                <br></br><br></br> 
+                Get OMIM by OMIM Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/id/100300" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/id/100300
+                </a>
+                <br></br><br></br>
+                Search OMIMs  by string using % (Search over the fields: OMIM ID and Title 
+                in this order. Use %25 for the wildcard):<br></br><br></br>
+                &nbsp;&nbsp;&nbsp;
+                OMIM ID:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/search/100500" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/search/100500
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Title (*AUTOSOMAL*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/search/%25AUTOSOMAL%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/search/%25AUTOSOMAL%25
+                </a><br></br>
+                <br></br><br></br>
+                <h1>External data links</h1>
+                <h3>GeneInfo</h3>
+                Get the GeneInfos by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/#{dataSets.OMIMWID}/geneinfo" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/#{dataSets.OMIMWID}/geneinfo
+                </a>
+                <br></br><br></br>
+                Get the GeneInfos by OMIM Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/omim/id/100800/geneinfo" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/omim/id/100800/geneinfo
+                </a>
+                <br></br><br></br>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
