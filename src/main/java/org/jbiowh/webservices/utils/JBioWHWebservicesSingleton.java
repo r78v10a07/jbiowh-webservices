@@ -54,12 +54,17 @@ public class JBioWHWebservicesSingleton {
      * /etc/jbiowh/jbiowh-webservices.xml and create the connection with the
      * database
      *
+     * @param force true to force the connection
      * @return the EntityManagerFactory from the JBioWHPersistence
      */
-    public EntityManagerFactory getWHEntityManager() {
+    public EntityManagerFactory getWHEntityManager(boolean force) {
         if (JBioWHPersistence.getInstance().getWHEntityManager() == null
-                || !JBioWHPersistence.getInstance().getWHEntityManager().isOpen()) {
+                || !JBioWHPersistence.getInstance().getWHEntityManager().isOpen() || force) {
             try {
+                if (JBioWHPersistence.getInstance().getWHEntityManager() != null && 
+                        JBioWHPersistence.getInstance().getWHEntityManager().isOpen()){
+                    JBioWHPersistence.getInstance().getWHEntityManager().close();
+                }
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document document = builder.parse(new File("/etc/jbiowh/jbiowh-webservices.xml"));
@@ -83,7 +88,7 @@ public class JBioWHWebservicesSingleton {
 
     public String getServer() {
         if (server == null) {
-            getWHEntityManager();
+            getWHEntityManager(true);
         }
         return server;
     }

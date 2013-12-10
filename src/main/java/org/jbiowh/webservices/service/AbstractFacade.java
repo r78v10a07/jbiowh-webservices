@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -41,7 +42,11 @@ public abstract class AbstractFacade<T> {
     protected abstract JBioWHSearch getSearch();
 
     protected EntityManager getEntityManager() {
-        return JBioWHWebservicesSingleton.getInstance().getWHEntityManager().createEntityManager();
+        try {
+            return JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager();
+        } catch (PersistenceException ex) {
+            return JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).createEntityManager();
+        }
     }
 
     public T find(Object id) {
@@ -68,7 +73,6 @@ public abstract class AbstractFacade<T> {
     @Produces({"application/xml", "application/json"})
     public List<T> findBySearch(@PathParam("search") String search) {
         try {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager();
             JBioWHSearch searchClass = getSearch();
             if (searchClass != null) {
                 return searchClass.search(search, null);
