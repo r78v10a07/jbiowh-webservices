@@ -1,6 +1,5 @@
 package org.jbiowh.webservices.service;
 
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -14,9 +13,8 @@ import org.jbiowhpersistence.utils.search.JBioWHSearch;
 /**
  * This class is the DataSet webservice
  *
- * $Author$ 
- * $LastChangedDate$ 
- * $LastChangedRevision$
+ * $Author$ $LastChangedDate$ $LastChangedRevision$
+ *
  * @since Nov 8, 2013
  */
 @Stateless
@@ -54,7 +52,7 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
     public List<DataSet> findName(@PathParam("name") String name) {
         parm.clear();
         parm.put("name", name);
-        return ((DataSetJpaController) getController(DataSetJpaController.class)).useNamedQuery("DataSet.findByName", parm);
+        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByName", parm);
     }
 
     @GET
@@ -63,7 +61,7 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
     public List<DataSet> findNotName(@PathParam("name") String name) {
         parm.clear();
         parm.put("name", name);
-        return ((DataSetJpaController) getController(DataSetJpaController.class)).useNamedQuery("DataSet.findByNoName", parm);
+        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoName", parm);
     }
 
     @GET
@@ -72,16 +70,16 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
     public List<DataSet> findStatus(@PathParam("status") String name) {
         parm.clear();
         parm.put("status", name);
-        return ((DataSetJpaController) getController(DataSetJpaController.class)).useNamedQuery("DataSet.findByStatus", parm);
+        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByStatus", parm);
     }
-    
+
     @GET
     @Path("nostatus/{status}")
     @Produces({"application/xml", "application/json"})
     public List<DataSet> findNotStatus(@PathParam("status") String name) {
         parm.clear();
         parm.put("status", name);
-        return ((DataSetJpaController) getController(DataSetJpaController.class)).useNamedQuery("DataSet.findByNoStatus", parm);
+        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoStatus", parm);
     }
 
     @GET
@@ -89,13 +87,6 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
-    }
-
-    @Override
-    protected HashMap<Class, Object> createController() {
-        HashMap<Class, Object> controllers = new HashMap();
-        controllers.put(DataSetJpaController.class, new DataSetJpaController(getEntityManager().getEntityManagerFactory()));
-        return controllers;
     }
 
     @Override

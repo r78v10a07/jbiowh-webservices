@@ -1,7 +1,6 @@
 package org.jbiowh.webservices.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -10,11 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
-import org.jbiowhpersistence.datasets.gene.genebank.controller.GeneBankCDSJpaController;
 import org.jbiowhpersistence.datasets.gene.genome.controller.GenePTTJpaController;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
 import org.jbiowhpersistence.datasets.gene.genome.search.SearchGenePTT;
-import org.jbiowhpersistence.datasets.protein.controller.ProteinJpaController;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
@@ -67,7 +64,7 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         parm.clear();
         parm.put("pTTFile", id);
         try {
-            return ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPTTFile", parm);
+            return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
         } catch (NoResultException ex) {
         }
         return new ArrayList();
@@ -80,16 +77,13 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         List<Protein> p = new ArrayList();
         parm.clear();
         parm.put("pTTFile", id);
-        try {
-            List<GenePTT> gs = ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPTTFile", parm);
-            if (gs != null) {
-                for (GenePTT g : gs) {
-                    if (g.getProtein() != null) {
-                        p.add(g.getProtein());
-                    }
+        List<GenePTT> gs = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
+        if (gs != null) {
+            for (GenePTT g : gs) {
+                if (g.getProtein() != null) {
+                    p.add(g.getProtein());
                 }
             }
-        } catch (NoResultException ex) {
         }
         return p;
     }
@@ -101,14 +95,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         List<GeneInfo> genes = new ArrayList();
         parm.clear();
         parm.put("pTTFile", id);
-        try {
-            List<GenePTT> ptts = ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPTTFile", parm);
-            for (GenePTT p : ptts) {
-                if (p.getGeneInfo() != null) {
-                    genes.add(p.getGeneInfo());
-                }
+        List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
+        for (GenePTT p : ptts) {
+            if (p.getGeneInfo() != null) {
+                genes.add(p.getGeneInfo());
             }
-        } catch (NoResultException ex) {
         }
         return genes;
     }
@@ -122,14 +113,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         parm.put("pTTFile", id);
         parm.put("pFrom", from);
         parm.put("pTo", to);
-        try {
-            List<GenePTT> ptts = ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
-            for (GenePTT p : ptts) {
-                if (p.getGeneInfo() != null) {
-                    genes.add(p.getGeneInfo());
-                }
+        List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
+        for (GenePTT p : ptts) {
+            if (p.getGeneInfo() != null) {
+                genes.add(p.getGeneInfo());
             }
-        } catch (NoResultException ex) {
         }
         return genes;
     }
@@ -143,14 +131,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         parm.put("pTTFile", id);
         parm.put("pFrom", from);
         parm.put("pTo", to);
-        try {
-            List<GenePTT> ptts = ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
-            for (GenePTT g : ptts) {
-                if (g.getProtein() != null) {
-                    p.add(g.getProtein());
-                }
+        List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
+        for (GenePTT g : ptts) {
+            if (g.getProtein() != null) {
+                p.add(g.getProtein());
             }
-        } catch (NoResultException ex) {
         }
         return p;
     }
@@ -163,11 +148,7 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         parm.put("pTTFile", id);
         parm.put("pFrom", from);
         parm.put("pTo", to);
-        try {
-            return ((GenePTTJpaController) getController(GenePTTJpaController.class)).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
-        } catch (NoResultException ex) {
-        }
-        return new ArrayList();
+        return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
     }
 
     @GET
@@ -175,15 +156,6 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
-    }
-
-    @Override
-    protected HashMap<Class, Object> createController() {
-        HashMap<Class, Object> controllers = new HashMap();
-        controllers.put(GenePTTJpaController.class, new GenePTTJpaController(getEntityManager().getEntityManagerFactory()));
-        controllers.put(GeneBankCDSJpaController.class, new GeneBankCDSJpaController(getEntityManager().getEntityManagerFactory()));
-        controllers.put(ProteinJpaController.class, new ProteinJpaController(getEntityManager().getEntityManagerFactory()));
-        return controllers;
     }
 
     @Override

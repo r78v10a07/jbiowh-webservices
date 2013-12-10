@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./../templates/mainTemplate.xhtml">
+
+            <ui:define name="center">
+                <br></br>
+                <h1>DrugBank access</h1>
+                <br></br>
+                Get the number of DrugBanks available:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/count" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/count
+                </a>
+                <br></br><br></br>
+                Get one DrugBank by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}
+                </a>
+                <br></br><br></br>
+                Get from/to DrugBanks by range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/1/3">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/1/3
+                </a>
+                <br></br><br></br> 
+                Get DrugBank by DrugBank Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00009" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00009
+                </a>
+                <br></br><br></br>
+                Search DrugBanks  by string using % (Search over the fields: DrugBank ID, CAS number, name and indication
+                in this order. Use %25 for the wildcard):<br></br><br></br>
+                &nbsp;&nbsp;&nbsp;
+                DrugBank ID (DB0000*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/DB0000%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/DB0000%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                CAS number (*-60-*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/%25-60-%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/%25-60-%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Indication (*asthma*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/%25asthma%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/%25asthma%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Name (Prop*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/prop%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/search/prop%25
+                </a><br></br>
+                <br></br><br></br>
+                <h1>External data links</h1>
+                <h3>Protein</h3>
+                Get the Protein by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/protein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/protein
+                </a>
+                <br></br><br></br>
+                Get the Protein by DrugBank Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00004/protein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00004/protein
+                </a>
+                <br></br><br></br>
+                Get the Protein as Carriers by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/proteinascarriers" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/proteinascarriers
+                </a>
+                <br></br><br></br>
+                Get the Protein as Carriers by DrugBank Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB08231/proteinascarriers" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB08231/proteinascarriers
+                </a>
+                <br></br><br></br>
+                Get the Protein as enzyme by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/proteinasenzyme" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/proteinasenzyme
+                </a>
+                <br></br><br></br>
+                Get the Protein as enzyme by DrugBank Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00130/proteinasenzyme" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00130/proteinasenzyme
+                </a>
+                <br></br><br></br>
+                Get the Protein as transporters by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/proteinastransporters" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/proteinastransporters
+                </a>
+                <br></br><br></br>
+                Get the Protein as transporters by DrugBank Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00451/proteinastransporters" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00451/proteinastransporters
+                </a>
+                <br></br><br></br>
+                Get the all Proteins by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/allprotein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/#{dataSets.drugBankWID}/allprotein
+                </a>
+                <br></br><br></br>
+                Get the all Proteins by DrugBank Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00394/allprotein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/drugbank/id/DB00394/allprotein
+                </a>
+                <br></br><br></br>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
