@@ -1,7 +1,6 @@
 package org.jbiowh.webservices.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -75,7 +74,7 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         parm.clear();
         parm.put("geneID", id);
         try {
-            return (GeneInfo) ((GeneInfoJpaController) getController(GeneInfoJpaController.class)).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
+            return (GeneInfo) (new GeneInfoJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
         } catch (NoResultException ex) {
         }
         return null;
@@ -88,7 +87,7 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         parm.clear();
         parm.put("geneID", id);
         try {
-            GeneInfo gene = (GeneInfo) ((GeneInfoJpaController) getController(GeneInfoJpaController.class)).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
+            GeneInfo gene = (GeneInfo) (new GeneInfoJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
             if (gene != null && gene.getProtein() != null) {
                 return new ArrayList(gene.getProtein());
             }
@@ -104,7 +103,7 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         parm.clear();
         parm.put("geneID", id);
         try {
-            GeneInfo gene = (GeneInfo) ((GeneInfoJpaController) getController(GeneInfoJpaController.class)).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
+            GeneInfo gene = (GeneInfo) (new GeneInfoJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
             if (gene != null && gene.getOmim() != null) {
                 return new ArrayList(gene.getOmim());
             }
@@ -118,13 +117,6 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
-    }
-
-    @Override
-    protected HashMap<Class, Object> createController() {
-        HashMap<Class, Object> controllers = new HashMap();
-        controllers.put(GeneInfoJpaController.class, new GeneInfoJpaController(getEntityManager().getEntityManagerFactory()));
-        return controllers;
     }
 
     @Override

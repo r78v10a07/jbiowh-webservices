@@ -6,7 +6,6 @@
 package org.jbiowh.webservices.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -21,8 +20,11 @@ import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
+ * This class is the OMIM Facade REST webservices
  *
- * @author roberto
+ * $Author$ $LastChangedDate$ $LastChangedRevision$
+ *
+ * @since Dec 9, 2013
  */
 @Stateless
 @Path("omim")
@@ -64,7 +66,7 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
         parm.clear();
         parm.put("omimId", id);
         try {
-            return (OMIM) ((OMIMJpaController) getController(OMIMJpaController.class)).useNamedQuerySingleResult("OMIM.findByOmimId", parm);
+            return (OMIM) (new OMIMJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("OMIM.findByOmimId", parm);
         } catch (NoResultException ex) {
         }
         return null;
@@ -77,7 +79,7 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
         parm.clear();
         parm.put("omimId", id);
         try {
-            OMIM o = (OMIM) ((OMIMJpaController) getController(OMIMJpaController.class)).useNamedQuerySingleResult("OMIM.findByOmimId", parm);
+            OMIM o = (OMIM) (new OMIMJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("OMIM.findByOmimId", parm);
             if (o != null && o.getGeneInfo() != null) {
                 return new ArrayList(o.getGeneInfo());
             }
@@ -91,13 +93,6 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
-    }
-
-    @Override
-    protected HashMap<Class, Object> createController() {
-        HashMap<Class, Object> controllers = new HashMap();
-        controllers.put(OMIMJpaController.class, new OMIMJpaController(getEntityManager().getEntityManagerFactory()));
-        return controllers;
     }
 
     @Override

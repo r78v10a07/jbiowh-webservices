@@ -34,31 +34,11 @@ public abstract class AbstractFacade<T> {
     }
 
     /**
-     * Creates the JPA controller
-     *
-     * @return the JPA controller
-     */
-    protected abstract HashMap<Class, Object> createController();
-
-    /**
      * Get the JBioWHSearch search class
      *
      * @return the JBioWHSearch search class
      */
     protected abstract JBioWHSearch getSearch();
-
-    /**
-     * Get the JPA controller and check is it is created or not
-     *
-     * @param controllerClass
-     * @return the JPA controller
-     */
-    protected Object getController(Class controllerClass) {
-        if (controllers == null) {
-            controllers = createController();
-        }
-        return controllers.get(controllerClass);
-    }
 
     protected EntityManager getEntityManager() {
         return JBioWHWebservicesSingleton.getInstance().getWHEntityManager().createEntityManager();

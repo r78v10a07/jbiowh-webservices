@@ -17,6 +17,8 @@ import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.disease.omim.controller.OMIMJpaController;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
+import org.jbiowhpersistence.datasets.drug.drugbank.controller.DrugBankJpaController;
+import org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBank;
 import org.jbiowhpersistence.datasets.gene.gene.controller.GeneInfoJpaController;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genome.controller.GenePTTJpaController;
@@ -124,6 +126,15 @@ public class DataSetBean implements Serializable {
     @Produces
     public String getOMIMWID() {
         List<OMIM> t = new OMIMJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager().createEntityManager().getEntityManagerFactory()).findOMIMEntities(1, 1);
+        if (t != null && !t.isEmpty()) {
+            return t.get(0).getWid().toString();
+        }
+        return "";
+    }
+    
+    @Produces
+    public String getDrugBankWID() {
+        List<DrugBank> t = new DrugBankJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager().createEntityManager().getEntityManagerFactory()).findDrugBankEntities(1, 1);
         if (t != null && !t.isEmpty()) {
             return t.get(0).getWid().toString();
         }

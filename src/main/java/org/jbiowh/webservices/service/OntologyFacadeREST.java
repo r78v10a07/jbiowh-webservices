@@ -1,7 +1,6 @@
 package org.jbiowh.webservices.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -73,7 +72,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         List<Ontology> listR = new ArrayList();
         parm.clear();
         parm.put("id", id);
-        return ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
+        return (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
     }
 
     @GET
@@ -83,7 +82,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         List<GeneInfo> listR = new ArrayList();
         parm.clear();
         parm.put("id", id);
-        List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
+        List<Ontology> onts = (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getGeneInfo() != null) {
                 listR.addAll(o.getGeneInfo());
@@ -99,7 +98,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
         List<Protein> listR = new ArrayList();
         parm.clear();
         parm.put("id", id);
-        List<Ontology> onts = ((OntologyJpaController) getController(OntologyJpaController.class)).useNamedQuery("Ontology.findById", parm);
+        List<Ontology> onts = (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
         for (Ontology o : onts) {
             if (o.getProtein() != null) {
                 listR.addAll(o.getProtein());
@@ -113,13 +112,6 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
-    }
-
-    @Override
-    protected HashMap<Class, Object> createController() {
-        HashMap<Class, Object> controllers = new HashMap();
-        controllers.put(OntologyJpaController.class, new OntologyJpaController(getEntityManager().getEntityManagerFactory()));
-        return controllers;
     }
 
     @Override
