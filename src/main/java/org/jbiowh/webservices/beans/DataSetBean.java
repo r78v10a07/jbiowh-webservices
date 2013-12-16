@@ -6,7 +6,6 @@
 package org.jbiowh.webservices.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -15,6 +14,7 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
+import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.disease.omim.controller.OMIMJpaController;
@@ -29,6 +29,8 @@ import org.jbiowhpersistence.datasets.ontology.controller.OntologyJpaController;
 import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
 import org.jbiowhpersistence.datasets.protein.controller.ProteinJpaController;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.controller.PirsfJpaController;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.taxonomy.controller.TaxonomyJpaController;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
@@ -42,22 +44,37 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 public class DataSetBean implements Serializable {
 
     private HashMap parm;
+    private List<DataSet> dataSets;
 
     /**
      * Creates a new instance of DataSetBean
      */
     public DataSetBean() {
         parm = new HashMap();
+        dataSets = null;
+    }
+
+    public String loadDataSets() {
+        try {
+                System.out.println("INFO: Loading datasets");
+                JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).getCache().evictAll();
+                dataSets = new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findDataSetEntities();
+                for (DataSet d : dataSets) {
+                    VerbLogger.getInstance().log(this.getClass(), d.getName() + "\t" + d.getStatus());
+                }
+                return "pretty:index";
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return loadDataSets();
+        }
     }
 
     @Produces
     public List<DataSet> getDatasets() {
-        try {
-            return new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).findDataSetEntities();
-        } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getDatasets();
+        if (dataSets == null) {
+            loadDataSets();
         }
+        return dataSets;
     }
 
     @Produces
@@ -70,7 +87,7 @@ public class DataSetBean implements Serializable {
         try {
             parm.clear();
             parm.put("taxId", 9906L);
-            Taxonomy t = (Taxonomy) new TaxonomyJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).useNamedQuerySingleResult("Taxonomy.findByTaxId", parm);
+            Taxonomy t = (Taxonomy) new TaxonomyJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("Taxonomy.findByTaxId", parm);
             if (t != null) {
                 return t.getWid().toString();
             }
@@ -87,7 +104,7 @@ public class DataSetBean implements Serializable {
         try {
             parm.clear();
             parm.put("id", "GO:0000011");
-            Ontology t = (Ontology) new OntologyJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).useNamedQuerySingleResult("Ontology.findById", parm);
+            Ontology t = (Ontology) new OntologyJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("Ontology.findById", parm);
             if (t != null) {
                 return t.getWid().toString();
             }
@@ -104,7 +121,7 @@ public class DataSetBean implements Serializable {
         try {
             parm.clear();
             parm.put("geneID", 2947819L);
-            GeneInfo t = (GeneInfo) new GeneInfoJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
+            GeneInfo t = (GeneInfo) new GeneInfoJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
             if (t != null) {
                 return t.getWid().toString();
             }
@@ -121,7 +138,7 @@ public class DataSetBean implements Serializable {
         try {
             parm.clear();
             parm.put("proteinGi", 148558178L);
-            GenePTT t = (GenePTT) new GenePTTJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).useNamedQuerySingleResult("GenePTT.findByProteinGi", parm);
+            GenePTT t = (GenePTT) new GenePTTJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("GenePTT.findByProteinGi", parm);
             if (t != null) {
                 return t.getProteinGi().toString();
             }
@@ -136,7 +153,7 @@ public class DataSetBean implements Serializable {
     @Produces
     public String getProteinWID() {
         try {
-            List<Protein> t = new ProteinJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).findProteinEntities(1, 1);
+            List<Protein> t = new ProteinJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findProteinEntities(1, 1);
             if (t != null && !t.isEmpty()) {
                 return t.get(0).getWid().toString();
             }
@@ -150,7 +167,7 @@ public class DataSetBean implements Serializable {
     @Produces
     public String getOMIMWID() {
         try {
-            List<OMIM> t = new OMIMJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).findOMIMEntities(1, 1);
+            List<OMIM> t = new OMIMJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findOMIMEntities(1, 1);
             if (t != null && !t.isEmpty()) {
                 return t.get(0).getWid().toString();
             }
@@ -164,13 +181,27 @@ public class DataSetBean implements Serializable {
     @Produces
     public String getDrugBankWID() {
         try {
-            List<DrugBank> t = new DrugBankJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager().getEntityManagerFactory()).findDrugBankEntities(1, 1);
+            List<DrugBank> t = new DrugBankJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findDrugBankEntities(1, 1);
             if (t != null && !t.isEmpty()) {
                 return t.get(0).getWid().toString();
             }
         } catch (PersistenceException ex) {
             JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
             return getDrugBankWID();
+        }
+        return "";
+    }
+
+    @Produces
+    public String getPIRSFWID() {
+        try {
+            List<Pirsf> t = new PirsfJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findPirsfEntities(1, 1);
+            if (t != null && !t.isEmpty()) {
+                return t.get(0).getWid().toString();
+            }
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return getPIRSFWID();
         }
         return "";
     }

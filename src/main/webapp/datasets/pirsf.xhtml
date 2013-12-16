@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="/templates/mainTemplate.xhtml">
+
+            <ui:define name="center">
+                <br></br>
+                <h1>PirSF access</h1>
+                <br></br>
+                Get the number of Pirsf available:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/count" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/count
+                </a>
+                <br></br><br></br>
+                Get Pirsf by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/#{dataSets.PIRSFWID}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/#{dataSets.PIRSFWID}
+                </a>                
+                <br></br><br></br>
+                Get from/to Pirsf by range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/1/3">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/1/3
+                </a>
+                <br></br><br></br>
+                Get from/to Pirsf by PirSFNumber:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/pirsfnumber/PIRSF038885">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/pirsfnumber/PIRSF038885
+                </a>
+                <br></br><br></br>
+                Search Pirsf groups  by string using % (Search over the fields: PirSFNumber, name and
+                accession number in this order. Use %25 for the wildcard):<br></br><br></br>
+                &nbsp;&nbsp;&nbsp;
+                PirSFNumber (PIRSF03888*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/search/PIRSF03888%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/search/PIRSF03888%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Name (cytochrome*):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/search/cytochrome%25" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/search/cytochrome%25
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Accession Number (A0A174):<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/search/A0A174" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/search/A0A174
+                </a><br></br><br></br>
+                <h1>External data links</h1>
+                <h3>Protein</h3>
+                Get the Proteins by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/#{dataSets.PIRSFWID}/protein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/#{dataSets.PIRSFWID}/protein
+                </a>
+                <br></br><br></br>
+                Get the Proteins by PirSF name Id:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/pirsfnumber/PIRSF000002/protein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/pirsf/pirsfnumber/PIRSF000002/protein
+                </a>
+                <br></br><br></br>                 
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

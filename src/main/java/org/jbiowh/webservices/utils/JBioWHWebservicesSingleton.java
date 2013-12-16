@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -58,32 +59,40 @@ public class JBioWHWebservicesSingleton {
      * @return the EntityManagerFactory from the JBioWHPersistence
      */
     public EntityManagerFactory getWHEntityManager(boolean force) {
-        if (JBioWHPersistence.getInstance().getWHEntityManager() == null
-                || !JBioWHPersistence.getInstance().getWHEntityManager().isOpen() || force) {
-            try {
-                if (JBioWHPersistence.getInstance().getWHEntityManager() != null && 
-                        JBioWHPersistence.getInstance().getWHEntityManager().isOpen()){
-                    JBioWHPersistence.getInstance().getWHEntityManager().close();
-                }
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                Document document = builder.parse(new File("/etc/jbiowh/jbiowh-webservices.xml"));
-                NodeList nodes = document.getElementsByTagName("webservice");
-                JBioWHPersistence.getInstance().openSchema(new JBioWHUserData(getElement("driver", (Element) nodes.item(0)),
-                        getElement("url", (Element) nodes.item(0)) + getElement("database", (Element) nodes.item(0)),
-                        getElement("dbuser", (Element) nodes.item(0)),
-                        getElement("dbpassword", (Element) nodes.item(0)), true), false, true);
-                server = getElement("server", (Element) nodes.item(0));
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if (JBioWHPersistence.getInstance().getWHEntityManager() == null
+                    || !JBioWHPersistence.getInstance().getWHEntityManager().isOpen() || force) {
+                createWHEntityManager();
             }
+            VerbLogger.getInstance().setLevel(VerbLogger.getInstance().INFO);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
+            createWHEntityManager();
+        } catch (PersistenceException ex) {
+            Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
+            createWHEntityManager();
         }
-        VerbLogger.getInstance().setLevel(VerbLogger.getInstance().INFO);
         return JBioWHPersistence.getInstance().getWHEntityManager();
+    }
+
+    private void createWHEntityManager() {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new File("/etc/jbiowh/jbiowh-webservices.xml"));
+            NodeList nodes = document.getElementsByTagName("webservice");
+            JBioWHPersistence.getInstance().openSchema(new JBioWHUserData(getElement("driver", (Element) nodes.item(0)),
+                    getElement("url", (Element) nodes.item(0)) + getElement("database", (Element) nodes.item(0)),
+                    getElement("dbuser", (Element) nodes.item(0)),
+                    getElement("dbpassword", (Element) nodes.item(0)), true), false, true);
+            server = getElement("server", (Element) nodes.item(0));
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JBioWHWebservicesSingleton.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getServer() {

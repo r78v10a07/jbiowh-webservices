@@ -2,10 +2,12 @@ package org.jbiowh.webservices.service;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
@@ -50,43 +52,56 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
     @Path("name/{name}")
     @Produces({"application/xml", "application/json"})
     public List<DataSet> findName(@PathParam("name") String name) {
-        parm.clear();
-        parm.put("name", name);
-        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByName", parm);
+        try {
+            parm.clear();
+            parm.put("name", name);
+            return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByName", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findName(name);
+        }
     }
 
     @GET
     @Path("noname/{name}")
     @Produces({"application/xml", "application/json"})
     public List<DataSet> findNotName(@PathParam("name") String name) {
-        parm.clear();
-        parm.put("name", name);
-        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoName", parm);
+        try {
+            parm.clear();
+            parm.put("name", name);
+            return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoName", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findNotName(name);
+        }
     }
 
     @GET
     @Path("status/{status}")
     @Produces({"application/xml", "application/json"})
     public List<DataSet> findStatus(@PathParam("status") String name) {
-        parm.clear();
-        parm.put("status", name);
-        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByStatus", parm);
+        try {
+            parm.clear();
+            parm.put("status", name);
+            return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByStatus", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findStatus(name);
+        }
     }
 
     @GET
     @Path("nostatus/{status}")
     @Produces({"application/xml", "application/json"})
     public List<DataSet> findNotStatus(@PathParam("status") String name) {
-        parm.clear();
-        parm.put("status", name);
-        return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoStatus", parm);
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+        try {
+            parm.clear();
+            parm.put("status", name);
+            return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoStatus", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findNotStatus(name);
+        }
     }
 
     @Override

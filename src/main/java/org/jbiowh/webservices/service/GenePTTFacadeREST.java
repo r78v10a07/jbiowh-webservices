@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genome.controller.GenePTTJpaController;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
@@ -66,6 +68,9 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
         try {
             return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
         } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGenePTTByPTTFileName(id);
         }
         return new ArrayList();
     }
@@ -74,88 +79,107 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
     @Path("chromosome/{id}/protein")
     @Produces({"application/xml", "application/json"})
     public List<Protein> findProteinByPTTFileName(@PathParam("id") String id) {
-        List<Protein> p = new ArrayList();
-        parm.clear();
-        parm.put("pTTFile", id);
-        List<GenePTT> gs = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
-        if (gs != null) {
-            for (GenePTT g : gs) {
-                if (g.getProtein() != null) {
-                    p.add(g.getProtein());
+        try {
+            List<Protein> p = new ArrayList();
+            parm.clear();
+            parm.put("pTTFile", id);
+            List<GenePTT> gs = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
+            if (gs != null) {
+                for (GenePTT g : gs) {
+                    if (g.getProtein() != null) {
+                        p.add(g.getProtein());
+                    }
                 }
             }
+            return p;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findProteinByPTTFileName(id);
         }
-        return p;
+
     }
 
     @GET
     @Path("chromosome/{id}/geneinfo")
     @Produces({"application/xml", "application/json"})
     public List<GeneInfo> findGeneByPTTFileName(@PathParam("id") String id) {
-        List<GeneInfo> genes = new ArrayList();
-        parm.clear();
-        parm.put("pTTFile", id);
-        List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
-        for (GenePTT p : ptts) {
-            if (p.getGeneInfo() != null) {
-                genes.add(p.getGeneInfo());
+        try {
+            List<GeneInfo> genes = new ArrayList();
+            parm.clear();
+            parm.put("pTTFile", id);
+            List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
+            for (GenePTT p : ptts) {
+                if (p.getGeneInfo() != null) {
+                    genes.add(p.getGeneInfo());
+                }
             }
+            return genes;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGeneByPTTFileName(id);
         }
-        return genes;
     }
 
     @GET
     @Path("chromosome/{id}/{from}/{to}/geneinfo")
     @Produces({"application/xml", "application/json"})
     public List<GeneInfo> findGeneByFileNameRange(@PathParam("id") String id, @PathParam("from") Integer from, @PathParam("to") Integer to) {
-        List<GeneInfo> genes = new ArrayList();
-        parm.clear();
-        parm.put("pTTFile", id);
-        parm.put("pFrom", from);
-        parm.put("pTo", to);
-        List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
-        for (GenePTT p : ptts) {
-            if (p.getGeneInfo() != null) {
-                genes.add(p.getGeneInfo());
+        try {
+            List<GeneInfo> genes = new ArrayList();
+            parm.clear();
+            parm.put("pTTFile", id);
+            parm.put("pFrom", from);
+            parm.put("pTo", to);
+            List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
+            for (GenePTT p : ptts) {
+                if (p.getGeneInfo() != null) {
+                    genes.add(p.getGeneInfo());
+                }
             }
+            return genes;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGeneByFileNameRange(id, from, to);
         }
-        return genes;
     }
 
     @GET
     @Path("chromosome/{id}/{from}/{to}/protein")
     @Produces({"application/xml", "application/json"})
     public List<Protein> findProteinByFileNameRange(@PathParam("id") String id, @PathParam("from") Integer from, @PathParam("to") Integer to) {
-        List<Protein> p = new ArrayList();
-        parm.clear();
-        parm.put("pTTFile", id);
-        parm.put("pFrom", from);
-        parm.put("pTo", to);
-        List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
-        for (GenePTT g : ptts) {
-            if (g.getProtein() != null) {
-                p.add(g.getProtein());
+        try {
+            List<Protein> p = new ArrayList();
+            parm.clear();
+            parm.put("pTTFile", id);
+            parm.put("pFrom", from);
+            parm.put("pTo", to);
+            List<GenePTT> ptts = (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
+            for (GenePTT g : ptts) {
+                if (g.getProtein() != null) {
+                    p.add(g.getProtein());
+                }
             }
+            return p;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findProteinByFileNameRange(id, from, to);
         }
-        return p;
     }
 
     @GET
     @Path("chromosome/{id}/{from}/{to}")
     @Produces({"application/xml", "application/json"})
     public List<GenePTT> findGenePTTByFileNameRange(@PathParam("id") String id, @PathParam("from") Integer from, @PathParam("to") Integer to) {
-        parm.clear();
-        parm.put("pTTFile", id);
-        parm.put("pFrom", from);
-        parm.put("pTo", to);
-        return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+        try {
+            parm.clear();
+            parm.put("pTTFile", id);
+            parm.put("pFrom", from);
+            parm.put("pTo", to);
+            return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGenePTTByFileNameRange(id, from, to);
+        }
     }
 
     @Override

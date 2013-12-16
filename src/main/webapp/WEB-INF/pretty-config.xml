@@ -1,47 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
-                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0
+                   http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
 
-	<url-mapping id="index">
-		<pattern value="/" />
-		<view-id value="/faces/index.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="dataset">
-		<pattern value="/dataset" />
-		<view-id value="/faces/datasets/dataset.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="taxonomy">
-		<pattern value="/taxonomy" />
-		<view-id value="/faces/datasets/taxonomy.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="ontology">
-		<pattern value="/ontology" />
-		<view-id value="/faces/datasets/ontology.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="gene">
-		<pattern value="/gene" />
-		<view-id value="/faces/datasets/gene.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="geneptt">
-		<pattern value="/geneptt" />
-		<view-id value="/faces/datasets/geneptt.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="omim">
-		<pattern value="/omim" />
-		<view-id value="/faces/datasets/omim.xhtml" />
-	</url-mapping>
-        
-        <url-mapping id="protein">
-		<pattern value="/protein" />
-		<view-id value="/faces/datasets/protein.xhtml" />
-	</url-mapping>
+    <url-mapping id="index">
+        <pattern value="/" />
+        <view-id value="/index.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="dataset">
+        <pattern value="/dataset" />
+        <view-id value="/datasets/dataset.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="gene">
+        <pattern value="/gene" />
+        <view-id value="/datasets/gene.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="drugbank">
+        <pattern value="/drugbank" />
+        <view-id value="/datasets/drugbank.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="geneptt">
+        <pattern value="/geneptt" />
+        <view-id value="/datasets/geneptt.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="omim">
+        <pattern value="/omim" />
+        <view-id value="/datasets/omim.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="ontology">
+        <pattern value="/ontology" />
+        <view-id value="/datasets/ontology.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="pirsf">
+        <pattern value="/pirsf" />
+        <view-id value="/datasets/pirsf.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="protein">
+        <pattern value="/protein" />
+        <view-id value="/datasets/protein.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="taxonomy">
+        <pattern value="/taxonomy" />
+        <view-id value="/datasets/taxonomy.xhtml" />
+    </url-mapping>
 
 </pretty-config>

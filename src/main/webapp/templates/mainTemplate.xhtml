@@ -31,37 +31,39 @@
     </script>
 
     <h:body>
-
-        <p:layout id="top" fullPage="true">
-            <p:layoutUnit position="north" size="100" resizable="false" closable="false" collapsible="false">  
-                <div align="center">
-                    <h2>JBioWH Webservices</h2>
-                </div>
-            </p:layoutUnit> 
-            <p:layoutUnit position="south" size="60" resizable="false" closable="false" collapsible="false">  
-                <div align="center">
-                    Developed by: Roberto Vera Alvarez<br></br>
-                    Email: Roberto.Vera@icgeb.org<br></br>
-                    <a href="http://code.google.com/p/jbiowh/">JBioWH Project Site</a>
-                </div>                
-            </p:layoutUnit> 
-            <p:layoutUnit position="west" size="185" resizable="false" closable="false" collapsible="false">  
-                <p:menu>
-                    <p:menuitem value="Home" outcome="/index.xhtml"/>  
-                    <p:menuitem value="DataSet" outcome="/datasets/dataset.xhtml"/>  
-                    <p:menuitem value="Taxonomy" outcome="/datasets/taxonomy.xhtml"/>
-                    <p:menuitem value="Ontology" outcome="/datasets/ontology.xhtml"/>
-                    <p:menuitem value="Gene" outcome="/datasets/gene.xhtml"/>
-                    <p:menuitem value="GenePTT" outcome="/datasets/geneptt.xhtml"/>
-                    <p:menuitem value="OMIM" outcome="/datasets/omim.xhtml"/>
-                    <p:menuitem value="Protein" outcome="/datasets/protein.xhtml"/>
-                    <p:menuitem value="DrugBank" outcome="/datasets/drugbank.xhtml"/>
-                </p:menu>
-            </p:layoutUnit>             
-            <p:layoutUnit position="center">  
-                <ui:insert name="center">Content</ui:insert>
-            </p:layoutUnit>  
-        </p:layout>
+        <h:form id="mainForm">
+            <p:layout id="top" fullPage="true">
+                <p:layoutUnit position="north" size="100" resizable="false" closable="false" collapsible="false">  
+                    <div align="center">
+                        <h2>JBioWH Webservices</h2>
+                    </div>
+                </p:layoutUnit> 
+                <p:layoutUnit position="south" size="60" resizable="false" closable="false" collapsible="false">  
+                    <div align="center">
+                        Developed by: Roberto Vera Alvarez<br></br>
+                        Email: Roberto.Vera@icgeb.org<br></br>
+                        <a href="http://code.google.com/p/jbiowh/">JBioWH Project Site</a>
+                    </div>                
+                </p:layoutUnit> 
+                <p:layoutUnit position="west" size="185" resizable="false" closable="false" collapsible="false"> 
+                    <p:menu>
+                        <p:menuitem value="Home" ajax="false" update="center" action="#{dataSets.loadDataSets}"/>
+                        <p:menuitem value="DataSet" ajax="false" update="center"  outcome="pretty:dataset" />
+                        <p:menuitem value="Taxonomy" ajax="false" update="center"  outcome="pretty:taxonomy"/>
+                        <p:menuitem value="Ontology" ajax="false" update="center"  outcome="pretty:ontology"/>
+                        <p:menuitem value="Gene" ajax="false" update="center"  outcome="pretty:gene"/>
+                        <p:menuitem value="GenePTT" ajax="false" update="center"  outcome="pretty:geneptt"/>
+                        <p:menuitem value="OMIM" ajax="false" update="center"  outcome="pretty:omim"/>
+                        <p:menuitem value="Protein" ajax="false" update="center"  outcome="pretty:protein"/>
+                        <p:menuitem value="DrugBank" ajax="false" update="center"  outcome="pretty:drugbank"/>
+                        <p:menuitem value="PirSF" ajax="false" update="center"  outcome="pretty:pirsf"/>
+                    </p:menu>
+                </p:layoutUnit>             
+                <p:layoutUnit id="center" position="center">  
+                    <ui:insert name="center">Content</ui:insert>
+                </p:layoutUnit>  
+            </p:layout>
+        </h:form>
     </h:body>
 
 </html>
