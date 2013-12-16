@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
 import org.jbiowhpersistence.datasets.gene.gene.controller.GeneInfoJpaController;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
@@ -76,6 +78,9 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
         try {
             return (GeneInfo) (new GeneInfoJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
         } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findByGeneID(id);
         }
         return null;
     }
@@ -92,6 +97,9 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
                 return new ArrayList(gene.getProtein());
             }
         } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findProteinByGeneID(id);
         }
         return new ArrayList();
     }
@@ -108,15 +116,11 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
                 return new ArrayList(gene.getOmim());
             }
         } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findOMIMByGeneID(id);
         }
         return new ArrayList();
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
     }
 
     @Override

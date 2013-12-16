@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.disease.omim.controller.OMIMJpaController;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
 import org.jbiowhpersistence.datasets.disease.omim.search.SearchOMIM;
@@ -68,6 +70,9 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
         try {
             return (OMIM) (new OMIMJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("OMIM.findByOmimId", parm);
         } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findById(id);
         }
         return null;
     }
@@ -84,15 +89,11 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
                 return new ArrayList(o.getGeneInfo());
             }
         } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGeneInfoById(id);
         }
         return new ArrayList();
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
     }
 
     @Override

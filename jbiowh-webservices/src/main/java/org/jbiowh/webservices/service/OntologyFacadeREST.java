@@ -3,10 +3,12 @@ package org.jbiowh.webservices.service;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.ontology.controller.OntologyJpaController;
 import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
@@ -69,49 +71,56 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     @Path("goid/{id}")
     @Produces({"application/xml", "application/json"})
     public List<Ontology> findByGOId(@PathParam("id") String id) {
-        List<Ontology> listR = new ArrayList();
-        parm.clear();
-        parm.put("id", id);
-        return (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
+        try {
+            parm.clear();
+            parm.put("id", id);
+            return (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findByGOId(id);
+        }
     }
 
     @GET
     @Path("goid/{id}/geneinfo")
     @Produces({"application/xml", "application/json"})
     public List<GeneInfo> findGeneInfoByGOId(@PathParam("id") String id) {
-        List<GeneInfo> listR = new ArrayList();
-        parm.clear();
-        parm.put("id", id);
-        List<Ontology> onts = (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
-        for (Ontology o : onts) {
-            if (o.getGeneInfo() != null) {
-                listR.addAll(o.getGeneInfo());
+        try {
+            List<GeneInfo> listR = new ArrayList();
+            parm.clear();
+            parm.put("id", id);
+            List<Ontology> onts = (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
+            for (Ontology o : onts) {
+                if (o.getGeneInfo() != null) {
+                    listR.addAll(o.getGeneInfo());
+                }
             }
+            return listR;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGeneInfoByGOId(id);
         }
-        return listR;
     }
 
     @GET
     @Path("goid/{id}/protein")
     @Produces({"application/xml", "application/json"})
     public List<Protein> findProteinByGOId(@PathParam("id") String id) {
-        List<Protein> listR = new ArrayList();
-        parm.clear();
-        parm.put("id", id);
-        List<Ontology> onts = (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
-        for (Ontology o : onts) {
-            if (o.getProtein() != null) {
-                listR.addAll(o.getProtein());
+        try {
+            List<Protein> listR = new ArrayList();
+            parm.clear();
+            parm.put("id", id);
+            List<Ontology> onts = (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
+            for (Ontology o : onts) {
+                if (o.getProtein() != null) {
+                    listR.addAll(o.getProtein());
+                }
             }
+            return listR;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findProteinByGOId(id);
         }
-        return listR;
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
     }
 
     @Override

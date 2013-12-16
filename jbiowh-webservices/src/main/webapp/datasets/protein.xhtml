@@ -5,7 +5,7 @@
 
     <body>
 
-        <ui:composition template="./../templates/mainTemplate.xhtml">
+        <ui:composition template="/templates/mainTemplate.xhtml">
 
             <ui:define name="center">
                 <br></br>
@@ -144,6 +144,19 @@
                     http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/CP17A_HUMAN/alldrugbank
                 </a>                
                 <br></br><br></br>
+                <h3>PirSF</h3>                  
+                Get PirSFs by Protein id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/#{dataSets.proteinWID}/pirsf" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/#{dataSets.proteinWID}/pirsf
+                </a>                
+                <br></br><br></br>   
+                Get PirSFs by Protein Name (040R_*):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/ILVB_ARATH/pirsf" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/protein/name/ILVB_ARATH/pirsf
+                </a>                
+                <br></br><br></br> 
             </ui:define>
 
         </ui:composition>

@@ -11,69 +11,67 @@
 
 
         <ui:define name="center">
-            <h:form prependId="false">
-                <p:dataTable id="dataTable" var="dataset" value="#{dataSets.datasets}">
+            <p:dataTable id="homeTable" var="dataset" value="#{dataSets.datasets}">
+                <f:facet name="header">  
+                    DataSet Status
+                </f:facet>
+
+                <p:column>  
                     <f:facet name="header">  
-                        DataSet Status
-                    </f:facet>
+                        Name
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            Name
-                        </f:facet>  
+                    <h:outputText value="#{dataset.name}" />  
+                </p:column>  
 
-                        <h:outputText value="#{dataset.name}" />  
-                    </p:column>  
+                <p:column>  
+                    <f:facet name="header">  
+                        Released
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            Released
-                        </f:facet>  
+                    <h:outputText value="#{dataset.releaseDate}" />  
+                </p:column>  
 
-                        <h:outputText value="#{dataset.releaseDate}" />  
-                    </p:column>  
+                <p:column>  
+                    <f:facet name="header">  
+                        Load
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            Load
-                        </f:facet>  
+                    <h:outputText value="#{dataset.loadDate}" />  
+                </p:column> 
 
-                        <h:outputText value="#{dataset.loadDate}" />  
-                    </p:column> 
+                <p:column>  
+                    <f:facet name="header">  
+                        Change
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            Change
-                        </f:facet>  
+                    <h:outputText value="#{dataset.changeDate}" />  
+                </p:column> 
 
-                        <h:outputText value="#{dataset.changeDate}" />  
-                    </p:column> 
+                <p:column>  
+                    <f:facet name="header">  
+                        URL
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            URL
-                        </f:facet>  
+                    <h:outputText value="#{dataset.homeURL}" />  
+                </p:column> 
 
-                        <h:outputText value="#{dataset.homeURL}" />  
-                    </p:column> 
+                <p:column>  
+                    <f:facet name="header">  
+                        Application
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            Application
-                        </f:facet>  
+                    <h:outputText value="#{dataset.application}" />  
+                </p:column> 
 
-                        <h:outputText value="#{dataset.application}" />  
-                    </p:column> 
+                <p:column>  
+                    <f:facet name="header">  
+                        Status
+                    </f:facet>  
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            Status
-                        </f:facet>  
-
-                        <h:outputText value="#{dataset.status}" />  
-                    </p:column> 
-                </p:dataTable>
-            </h:form>
+                    <h:outputText value="#{dataset.status}" />  
+                </p:column> 
+            </p:dataTable>
         </ui:define>
     </ui:composition>
 </html>

@@ -3,15 +3,19 @@ package org.jbiowh.webservices.service;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBank;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.protein.controller.ProteinJpaController;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.search.SearchProtein;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProtein;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
@@ -101,14 +105,28 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             if (p.getDrugBank() != null && !p.getDrugBank().isEmpty()) {
                 d.addAll(p.getDrugBank());
             }
-            if (p.getDrugBankAsCarriers()!= null && !p.getDrugBankAsCarriers().isEmpty()) {
+            if (p.getDrugBankAsCarriers() != null && !p.getDrugBankAsCarriers().isEmpty()) {
                 d.addAll(p.getDrugBankAsCarriers());
             }
-            if (p.getDrugBankAsTransporters()!= null && !p.getDrugBankAsTransporters().isEmpty()) {
+            if (p.getDrugBankAsTransporters() != null && !p.getDrugBankAsTransporters().isEmpty()) {
                 d.addAll(p.getDrugBank());
             }
-            if (p.getDrugBankAsEnzyme()!= null && !p.getDrugBankAsEnzyme().isEmpty()) {
+            if (p.getDrugBankAsEnzyme() != null && !p.getDrugBankAsEnzyme().isEmpty()) {
                 d.addAll(p.getDrugBankAsEnzyme());
+            }
+        }
+        return d;
+    }
+
+    @GET
+    @Path("{id}/pirsf")
+    @Produces({"application/xml", "application/json"})
+    public List<Pirsf> findPirsf(@PathParam("id") Long id) {
+        List<Pirsf> d = new ArrayList<Pirsf>();
+        Protein p = super.find(id);
+        if (p != null && p.getpIRSFhasProtein() != null && !p.getpIRSFhasProtein().isEmpty()) {
+            for (PirsfhasProtein hp : p.getpIRSFhasProtein().values()) {
+                d.add(hp.getPirsf());
             }
         }
         return d;
@@ -125,142 +143,200 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
     @Path("name/{id}")
     @Produces({"application/xml", "application/json"})
     public List<Protein> findByName(@PathParam("id") String id) {
-        parm.clear();
-        parm.put("name", id);
-        return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+        try {
+            parm.clear();
+            parm.put("name", id);
+            return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findByName(id);
+        }
     }
 
     @GET
     @Path("name/{id}/geneinfo")
     @Produces({"application/xml", "application/json"})
     public List<GeneInfo> findGeneInfoByName(@PathParam("id") String id) {
-        List<GeneInfo> g = new ArrayList();
-        parm.clear();
-        parm.put("name", id);
-        List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
-        if (ps != null) {
-            for (Protein p : ps) {
-                if (p.getGeneInfo() != null && !p.getGeneInfo().isEmpty()) {
-                    g.addAll(p.getGeneInfo());
+        try {
+            List<GeneInfo> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getGeneInfo() != null && !p.getGeneInfo().isEmpty()) {
+                        g.addAll(p.getGeneInfo());
+                    }
                 }
             }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findGeneInfoByName(id);
         }
-        return g;
     }
 
     @GET
     @Path("name/{id}/drugbank")
     @Produces({"application/xml", "application/json"})
     public List<DrugBank> findDrugBankByName(@PathParam("id") String id) {
-        List<DrugBank> g = new ArrayList();
-        parm.clear();
-        parm.put("name", id);
-        List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
-        if (ps != null) {
-            for (Protein p : ps) {
-                if (p.getDrugBank() != null && !p.getDrugBank().isEmpty()) {
-                    g.addAll(p.getDrugBank());
+        try {
+            List<DrugBank> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getDrugBank() != null && !p.getDrugBank().isEmpty()) {
+                        g.addAll(p.getDrugBank());
+                    }
                 }
             }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findDrugBankByName(id);
         }
-        return g;
     }
 
     @GET
     @Path("name/{id}/drugbankascarriers")
     @Produces({"application/xml", "application/json"})
     public List<DrugBank> findDrugBankAsCarriersByName(@PathParam("id") String id) {
-        List<DrugBank> g = new ArrayList();
-        parm.clear();
-        parm.put("name", id);
-        List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
-        if (ps != null) {
-            for (Protein p : ps) {
-                if (p.getDrugBankAsCarriers() != null && !p.getDrugBankAsCarriers().isEmpty()) {
-                    g.addAll(p.getDrugBankAsCarriers());
+        try {
+            List<DrugBank> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getDrugBankAsCarriers() != null && !p.getDrugBankAsCarriers().isEmpty()) {
+                        g.addAll(p.getDrugBankAsCarriers());
+                    }
                 }
             }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findDrugBankAsCarriersByName(id);
         }
-        return g;
     }
 
     @GET
     @Path("name/{id}/drugbankastransporters")
     @Produces({"application/xml", "application/json"})
     public List<DrugBank> findDrugBankAsTransportersByName(@PathParam("id") String id) {
-        List<DrugBank> g = new ArrayList();
-        parm.clear();
-        parm.put("name", id);
-        List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
-        if (ps != null) {
-            for (Protein p : ps) {
-                if (p.getDrugBankAsTransporters() != null && !p.getDrugBankAsTransporters().isEmpty()) {
-                    g.addAll(p.getDrugBankAsTransporters());
+        try {
+            List<DrugBank> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getDrugBankAsTransporters() != null && !p.getDrugBankAsTransporters().isEmpty()) {
+                        g.addAll(p.getDrugBankAsTransporters());
+                    }
                 }
             }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findDrugBankAsTransportersByName(id);
         }
-        return g;
     }
 
     @GET
     @Path("name/{id}/drugbankasenzyme")
     @Produces({"application/xml", "application/json"})
     public List<DrugBank> findDrugBankAsEnzymeByName(@PathParam("id") String id) {
-        List<DrugBank> g = new ArrayList();
-        parm.clear();
-        parm.put("name", id);
-        List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
-        if (ps != null) {
-            for (Protein p : ps) {
-                if (p.getDrugBankAsEnzyme() != null && !p.getDrugBankAsEnzyme().isEmpty()) {
-                    g.addAll(p.getDrugBankAsEnzyme());
+        try {
+            List<DrugBank> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getDrugBankAsEnzyme() != null && !p.getDrugBankAsEnzyme().isEmpty()) {
+                        g.addAll(p.getDrugBankAsEnzyme());
+                    }
                 }
             }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findDrugBankAsEnzymeByName(id);
         }
-        return g;
     }
 
     @GET
     @Path("name/{id}/alldrugbank")
     @Produces({"application/xml", "application/json"})
     public List<DrugBank> findAllDrugBankByName(@PathParam("id") String id) {
-        List<DrugBank> g = new ArrayList();
-        parm.clear();
-        parm.put("name", id);
-        List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
-        if (ps != null) {
-            for (Protein p : ps) {
-                if (p.getDrugBank() != null && !p.getDrugBank().isEmpty()) {
-                    g.addAll(p.getDrugBank());
-                }
-                if (p.getDrugBankAsCarriers() != null && !p.getDrugBankAsCarriers().isEmpty()) {
-                    g.addAll(p.getDrugBankAsCarriers());
-                }
-                if (p.getDrugBankAsTransporters() != null && !p.getDrugBankAsTransporters().isEmpty()) {
-                    g.addAll(p.getDrugBankAsTransporters());
-                }
-                if (p.getDrugBankAsEnzyme() != null && !p.getDrugBankAsEnzyme().isEmpty()) {
-                    g.addAll(p.getDrugBankAsEnzyme());
+        try {
+            List<DrugBank> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getDrugBank() != null && !p.getDrugBank().isEmpty()) {
+                        g.addAll(p.getDrugBank());
+                    }
+                    if (p.getDrugBankAsCarriers() != null && !p.getDrugBankAsCarriers().isEmpty()) {
+                        g.addAll(p.getDrugBankAsCarriers());
+                    }
+                    if (p.getDrugBankAsTransporters() != null && !p.getDrugBankAsTransporters().isEmpty()) {
+                        g.addAll(p.getDrugBankAsTransporters());
+                    }
+                    if (p.getDrugBankAsEnzyme() != null && !p.getDrugBankAsEnzyme().isEmpty()) {
+                        g.addAll(p.getDrugBankAsEnzyme());
+                    }
                 }
             }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findAllDrugBankByName(id);
         }
-        return g;
+    }
+
+    @GET
+    @Path("name/{id}/pirsf")
+    @Produces({"application/xml", "application/json"})
+    public List<Pirsf> findPirsfByName(@PathParam("id") String id) {
+        try {
+            List<Pirsf> g = new ArrayList();
+            parm.clear();
+            parm.put("name", id);
+            List<Protein> ps = (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
+            if (ps != null) {
+                for (Protein p : ps) {
+                    if (p.getpIRSFhasProtein() != null && !p.getpIRSFhasProtein().isEmpty()) {
+                        for (PirsfhasProtein hp : p.getpIRSFhasProtein().values()) {
+                            g.add(hp.getPirsf());
+                        }
+                    }
+                }
+            }
+            return g;
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findPirsfByName(id);
+        }
     }
 
     @GET
     @Path("accession/{id}")
     @Produces({"application/xml", "application/json"})
     public List<Protein> findByAccession(@PathParam("id") String id) {
-        parm.clear();
-        parm.put("accessionNumber", id);
-        return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByAccessionNumber", parm);
-    }
-
-    @GET
-    @Path("count")
-    @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
+        try {
+            parm.clear();
+            parm.put("accessionNumber", id);
+            return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByAccessionNumber", parm);
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return findByAccession(id);
+        }
     }
 
     @Override
