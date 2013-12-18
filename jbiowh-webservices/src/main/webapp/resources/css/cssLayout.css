@@ -64,22 +64,48 @@
 }
 
 .ui-layout-north .ui-layout-unit-content{
-    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.7)) repeat scroll 0 0 #C4C4C4;
+    /* IE10 */ 
+    background: -ms-linear-gradient(center top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7)) repeat scroll 0 0 #C4C4C4;
+
+    /* Mozilla Firefox */ 
+    background: -moz-linear-gradient(center top, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.7)) repeat scroll 0 0 #C4C4C4;
+
+    /* Opera  */
+    background: -o-linear-gradient(center top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7)) repeat scroll 0 0 #C4C4C4;
+
+    /* Webkit (Safari/Chrome 10)*/ 
+    background: -webkit-gradient(linear, center top, center bottom, color-stop(0, rgba(255, 255, 255, 0)), color-stop(1, rgba(255, 255, 255, 0.7))) repeat scroll 0 0 #C4C4C4; 
+
+    /* Webkit (Chrome 11+) */ 
+    background: -webkit-linear-gradient(center top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7)) repeat scroll 0 0 #C4C4C4;
+
     color: #333333;
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .ui-layout-south .ui-layout-unit-content{
+    /* IE10 */ 
+    background: -ms-linear-gradient(center top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;
+    
+    /* Mozilla Firefox */ 
     background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;
+
+    /* Opera  */
+    background: -o-linear-gradient(center top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;
+
+    /* Webkit (Safari/Chrome 10)*/ 
+    background: -webkit-gradient(linear, center top, center bottom, color-stop(0, rgba(255, 255, 255, 0.7)), color-stop(1, rgba(255, 255, 255, 0))) repeat scroll 0 0 #C4C4C4; 
+
+    /* Webkit (Chrome 11+) */ 
+    background: -webkit-linear-gradient(center top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;
+
     color: #333333;
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .ui-menu, .ui-menu .ui-menu-child {
-    /*background:  -moz-radial-gradient(center , rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8)) repeat scroll 0 0 #C4C4C4;
-    /*background: -moz-linear-gradient(right , rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C4C4C4;*/
     background: #ffffff;
 }
 

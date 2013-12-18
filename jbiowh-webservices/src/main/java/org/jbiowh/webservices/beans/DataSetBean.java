@@ -44,37 +44,24 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 public class DataSetBean implements Serializable {
 
     private HashMap parm;
-    private List<DataSet> dataSets;
 
     /**
      * Creates a new instance of DataSetBean
      */
     public DataSetBean() {
         parm = new HashMap();
-        dataSets = null;
-    }
-
-    public String loadDataSets() {
-        try {
-                System.out.println("INFO: Loading datasets");
-                JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).getCache().evictAll();
-                dataSets = new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findDataSetEntities();
-                for (DataSet d : dataSets) {
-                    VerbLogger.getInstance().log(this.getClass(), d.getName() + "\t" + d.getStatus());
-                }
-                return "pretty:index";
-        } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return loadDataSets();
-        }
     }
 
     @Produces
     public List<DataSet> getDatasets() {
-        if (dataSets == null) {
-            loadDataSets();
+        try {
+            System.out.println("INFO: Loading datasets");
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).getCache().evict(DataSet.class);
+            return new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findDataSetEntities();
+        } catch (PersistenceException ex) {
+            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
+            return getDatasets();
         }
-        return dataSets;
     }
 
     @Produces
