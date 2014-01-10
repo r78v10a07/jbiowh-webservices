@@ -14,7 +14,6 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
-import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.disease.omim.controller.OMIMJpaController;
