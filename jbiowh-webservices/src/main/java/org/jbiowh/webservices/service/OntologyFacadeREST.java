@@ -48,7 +48,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     @GET
     @Path("{id}/geneinfo")
     @Produces({"application/xml", "application/json"})
-    public List<GeneInfo> findGeneInfoById(@PathParam("id") String id) {
+    public List<GeneInfo> findGeneInfoById(@PathParam("id") Long id) {
         Ontology ont = super.find(id);
         if (ont != null && ont.getGeneInfo() != null) {
             return new ArrayList(ont.getGeneInfo());
@@ -59,7 +59,7 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
     @GET
     @Path("{id}/protein")
     @Produces({"application/xml", "application/json"})
-    public List<Protein> findProteinById(@PathParam("id") String id) {
+    public List<Protein> findProteinById(@PathParam("id") Long id) {
         Ontology ont = super.find(id);
         if (ont != null && ont.getProtein() != null) {
             return new ArrayList(ont.getProtein());
