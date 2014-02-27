@@ -84,7 +84,7 @@ public class DrugBankFacadeREST extends AbstractFacade<DrugBank> {
     @GET
     @Path("{id}/allprotein")
     @Produces({"application/xml", "application/json"})
-    public List<Protein> findPAllrotein(@PathParam("id") Long id) {
+    public List<Protein> findAllProtein(@PathParam("id") Long id) {
         List<Protein> p = new ArrayList<Protein>();
         DrugBank d = super.find(id);
         if (d != null) {
