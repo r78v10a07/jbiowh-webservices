@@ -17,7 +17,7 @@ import org.jbiowhpersistence.datasets.protgroup.pirsf.search.SearchPirsf;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 
 /**
- * This class is
+ * This class is The PIrSF webservices
  *
  * $Author$ $LastChangedDate$ $LastChangedRevision$
  *
