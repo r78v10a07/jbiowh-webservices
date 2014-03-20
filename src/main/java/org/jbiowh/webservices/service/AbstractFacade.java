@@ -53,9 +53,11 @@ public abstract class AbstractFacade<T> {
         try {
             return getEntityManager().find(entityClass, id);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return find(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return find(id);
+            }
         }
+        return null;
     }
 
     public List<T> findAll() {
@@ -64,9 +66,11 @@ public abstract class AbstractFacade<T> {
             cq.select(cq.from(entityClass));
             return getEntityManager().createQuery(cq).getResultList();
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findAll();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findAll();
+            }
         }
+        return new ArrayList<T>();
     }
 
     public List<T> findRange(int[] range) {
@@ -78,9 +82,11 @@ public abstract class AbstractFacade<T> {
             q.setFirstResult(range[0]);
             return q.getResultList();
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findRange(range);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findRange(range);
+            }
         }
+        return new ArrayList<T>();
     }
 
     @GET
@@ -93,8 +99,9 @@ public abstract class AbstractFacade<T> {
                 return searchClass.search(search, null);
             }
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findBySearch(search);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findBySearch(search);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -112,9 +119,11 @@ public abstract class AbstractFacade<T> {
             javax.persistence.Query q = getEntityManager().createQuery(cq);
             return ((Long) q.getSingleResult()).toString();
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return count();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return count();
+            }
         }
+        return "";
     }
 
 }

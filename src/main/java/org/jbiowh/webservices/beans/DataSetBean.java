@@ -6,6 +6,7 @@
 package org.jbiowh.webservices.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -22,6 +23,8 @@ import org.jbiowhpersistence.datasets.drug.drugbank.controller.DrugBankJpaContro
 import org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBank;
 import org.jbiowhpersistence.datasets.gene.gene.controller.GeneInfoJpaController;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
+import org.jbiowhpersistence.datasets.gene.genebank.controller.GeneBankJpaController;
+import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank;
 import org.jbiowhpersistence.datasets.gene.genome.controller.GenePTTJpaController;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
 import org.jbiowhpersistence.datasets.ontology.controller.OntologyJpaController;
@@ -58,9 +61,11 @@ public class DataSetBean implements Serializable {
             JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).getCache().evict(DataSet.class);
             return new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findDataSetEntities();
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getDatasets();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getDatasets();
+            }
         }
+        return new ArrayList<DataSet>();
     }
 
     @Produces
@@ -79,8 +84,9 @@ public class DataSetBean implements Serializable {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getTaxonomyWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getTaxonomyWID();
+            }
         }
         return "";
     }
@@ -96,8 +102,9 @@ public class DataSetBean implements Serializable {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getOntologyWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getOntologyWID();
+            }
         }
         return "";
     }
@@ -113,8 +120,65 @@ public class DataSetBean implements Serializable {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getGeneInfoWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getGeneInfoWID();
+            }
+        }
+        return "";
+    }
+
+    @Produces
+    public String getGeneBankWID() {
+        try {
+            parm.clear();
+            parm.put("locusName", "CP002312");
+            GeneBank t = (GeneBank) new GeneBankJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("GeneBank.findByLocusName", parm);
+            if (t != null) {
+                return t.getWid().toString();
+            }
+        } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getGeneInfoWID();
+            }
+        }
+        return "";
+    }
+
+    @Produces
+    public String getGeneBankGi() {
+        try {
+            parm.clear();
+            parm.put("locusName", "CP002312");
+            GeneBank t = (GeneBank) new GeneBankJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("GeneBank.findByLocusName", parm);
+            if (t != null) {
+                return Integer.toString(t.getGi());
+            }
+        } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getGeneInfoWID();
+            }
+        }
+        return "";
+    }
+
+    @Produces
+    public String getGeneBankProteinGi() {
+        try {
+            parm.clear();
+            parm.put("locusName", "CP002312");
+            GeneBank t = (GeneBank) new GeneBankJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).useNamedQuerySingleResult("GeneBank.findByLocusName", parm);
+            if (t != null) {
+                if (t.getGeneBankCDS() != null && t.getGeneBankCDS().isEmpty()) {
+                    return Integer.toString(t.getGeneBankCDS().iterator().next().getProteinGi());
+                }
+            }
+        } catch (NoResultException ex) {
+        } catch (PersistenceException ex) {
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getGeneInfoWID();
+            }
         }
         return "";
     }
@@ -130,8 +194,9 @@ public class DataSetBean implements Serializable {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getGenePTTProteinGi();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getGenePTTProteinGi();
+            }
         }
         return "";
     }
@@ -144,8 +209,9 @@ public class DataSetBean implements Serializable {
                 return t.get(0).getWid().toString();
             }
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getProteinWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getProteinWID();
+            }
         }
         return "";
     }
@@ -158,8 +224,9 @@ public class DataSetBean implements Serializable {
                 return t.get(0).getWid().toString();
             }
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getOMIMWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getOMIMWID();
+            }
         }
         return "";
     }
@@ -172,8 +239,9 @@ public class DataSetBean implements Serializable {
                 return t.get(0).getWid().toString();
             }
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getDrugBankWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getDrugBankWID();
+            }
         }
         return "";
     }
@@ -186,8 +254,9 @@ public class DataSetBean implements Serializable {
                 return t.get(0).getWid().toString();
             }
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return getPIRSFWID();
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return getPIRSFWID();
+            }
         }
         return "";
     }

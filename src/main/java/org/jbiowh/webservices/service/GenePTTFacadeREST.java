@@ -69,8 +69,9 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
             return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPTTFile", parm);
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGenePTTByPTTFileName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGenePTTByPTTFileName(id);
+            }
         }
         return new ArrayList();
     }
@@ -93,10 +94,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
             }
             return p;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinByPTTFileName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinByPTTFileName(id);
+            }
         }
-
+        return new ArrayList<Protein>();
     }
 
     @GET
@@ -115,9 +117,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
             }
             return genes;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneByPTTFileName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneByPTTFileName(id);
+            }
         }
+        return new ArrayList<GeneInfo>();
     }
 
     @GET
@@ -138,9 +142,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
             }
             return genes;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneByFileNameRange(id, from, to);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneByFileNameRange(id, from, to);
+            }
         }
+        return new ArrayList<GeneInfo>();
     }
 
     @GET
@@ -161,9 +167,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
             }
             return p;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinByFileNameRange(id, from, to);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinByFileNameRange(id, from, to);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @GET
@@ -177,9 +185,11 @@ public class GenePTTFacadeREST extends AbstractFacade<GenePTT> {
             parm.put("pTo", to);
             return (new GenePTTJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GenePTT.findByPFromPToPTTFile", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGenePTTByFileNameRange(id, from, to);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGenePTTByFileNameRange(id, from, to);
+            }
         }
+        return new ArrayList<GenePTT>();
     }
 
     @Override

@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="/templates/mainTemplate.xhtml">
+
+            <ui:define name="center">
+                <br></br>
+                <h1>GenBank access</h1>
+                <br></br>
+                Get the number of GenBank available:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/count" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/count
+                </a>
+                <br></br><br></br>
+                Get one GenBank entry by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/#{dataSets.geneBankWID}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/#{dataSets.geneBankWID}
+                </a>                
+                <br></br><br></br>
+                Get from/to GenBanks by range:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/1/3">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/1/3
+                </a>
+                <br></br><br></br>
+                Get GenBank By Gi:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/gi/#{dataSets.geneBankGi}">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/gi/#{dataSets.geneBankGi}
+                </a>
+                <br></br><br></br>
+                Get GenBank by LocusName:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/locusname/CP002312">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/locusname/CP002312
+                </a>
+                <br></br><br></br>
+                Search GeneBank entries  by string using % (Search over the fields: ProteinGi, definition 
+                in this order. Use %25 for the wildcard):<br></br><br></br>
+                &nbsp;&nbsp;&nbsp;
+                ProteinGi:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneinfo/search/#{dataSets.geneBankProteinGi}" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneinfo/search/#{dataSets.geneBankProteinGi}
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                Definition:<br></br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/geneinfo/search/Borrelia%20burgdorferi%20JD1" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/geneinfo/search/Borrelia%20burgdorferi%20JD1
+                </a><br></br>
+                &nbsp;&nbsp;&nbsp;
+                <br></br><br></br>
+                <h1>External data links</h1>
+                <h3>GeneInfo</h3>
+                Get Genes by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/#{dataSets.geneBankWID}/geneinfo">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/#{dataSets.geneBankWID}/geneinfo
+                </a>
+                <br></br><br></br>
+                Get Genes by LocusName:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/locusname/CP002312/geneinfo">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/locusname/CP002312/geneinfo
+                </a>
+                <br></br><br></br>
+                Get Genes by Gi<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/gi/#{dataSets.geneBankGi}/geneinfo">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/gi/#{dataSets.geneBankGi}/geneinfo
+                </a>
+                <br></br><br></br>
+                <h3>Protein</h3>
+                Get the Proteins by Id (this Id is the internal JBioWH WID that change in all DB):<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/#{dataSets.geneBankWID}/protein" target="_blank">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/#{dataSets.geneBankWID}/protein
+                </a>
+                <br></br><br></br>
+                Get Proteins by LocusName:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/locusname/CP002312/protein">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/locusname/CP002312/protein
+                </a>
+                <br></br><br></br>
+                Get Proteins by Gi:<br></br>
+                &nbsp;&nbsp;&nbsp;
+                <a href="http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/gi/#{dataSets.geneBankGi}/protein">
+                    http://#{dataSets.server}/jbiowh-webservices/webservices/genbank/gi/#{dataSets.geneBankGi}/protein
+                </a>
+                <br></br><br></br>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

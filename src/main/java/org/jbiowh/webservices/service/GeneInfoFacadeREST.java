@@ -79,8 +79,9 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
             return (GeneInfo) (new GeneInfoJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("GeneInfo.findByGeneID", parm);
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findByGeneID(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findByGeneID(id);
+            }
         }
         return null;
     }
@@ -98,8 +99,9 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinByGeneID(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinByGeneID(id);
+            }
         }
         return new ArrayList();
     }
@@ -117,8 +119,9 @@ public class GeneInfoFacadeREST extends AbstractFacade<GeneInfo> {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findOMIMByGeneID(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findOMIMByGeneID(id);
+            }
         }
         return new ArrayList();
     }
