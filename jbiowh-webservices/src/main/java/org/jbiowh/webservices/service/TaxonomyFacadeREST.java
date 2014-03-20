@@ -61,9 +61,11 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
             }
             return new ArrayList();
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneInfoById(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneInfoById(id);
+            }
         }
+        return new ArrayList<GeneInfo>();
     }
 
     @GET
@@ -79,9 +81,11 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
             }
             return new ArrayList();
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinById(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinById(id);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @GET
@@ -97,9 +101,11 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
             }
             return null;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findByTaxId(taxid);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findByTaxId(taxid);
+            }
         }
+        return null;
     }
 
     @GET
@@ -111,9 +117,11 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
             parm.put("taxID", taxid);
             return (new GeneInfoJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("GeneInfo.findByTaxID", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneInfoByTaxId(taxid);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneInfoByTaxId(taxid);
+            }
         }
+        return new ArrayList<GeneInfo>();
     }
 
     @GET
@@ -125,9 +133,11 @@ public class TaxonomyFacadeREST extends AbstractFacade<Taxonomy> {
             parm.put("taxId", taxid);
             return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findByTaxId", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinByTaxId(taxid);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinByTaxId(taxid);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @Override

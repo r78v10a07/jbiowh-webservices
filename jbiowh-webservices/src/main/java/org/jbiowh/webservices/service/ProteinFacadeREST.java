@@ -148,9 +148,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             parm.put("name", id);
             return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByName", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findByName(id);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @GET
@@ -171,9 +173,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneInfoByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneInfoByName(id);
+            }
         }
+        return new ArrayList<GeneInfo>();
     }
 
     @GET
@@ -194,9 +198,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findDrugBankByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findDrugBankByName(id);
+            }
         }
+        return new ArrayList<DrugBank>();
     }
 
     @GET
@@ -217,9 +223,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findDrugBankAsCarriersByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findDrugBankAsCarriersByName(id);
+            }
         }
+        return new ArrayList<DrugBank>();
     }
 
     @GET
@@ -240,9 +248,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findDrugBankAsTransportersByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findDrugBankAsTransportersByName(id);
+            }
         }
+        return new ArrayList<DrugBank>();
     }
 
     @GET
@@ -263,9 +273,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findDrugBankAsEnzymeByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findDrugBankAsEnzymeByName(id);
+            }
         }
+        return new ArrayList<DrugBank>();
     }
 
     @GET
@@ -295,9 +307,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findAllDrugBankByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findAllDrugBankByName(id);
+            }
         }
+        return new ArrayList<DrugBank>();
     }
 
     @GET
@@ -320,9 +334,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             }
             return g;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findPirsfByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findPirsfByName(id);
+            }
         }
+        return new ArrayList<Pirsf>();
     }
 
     @GET
@@ -334,9 +350,11 @@ public class ProteinFacadeREST extends AbstractFacade<Protein> {
             parm.put("accessionNumber", id);
             return (new ProteinJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Protein.findProteinByAccessionNumber", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findByAccession(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findByAccession(id);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @Override

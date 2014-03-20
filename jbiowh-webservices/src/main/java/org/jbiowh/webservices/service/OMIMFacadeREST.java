@@ -71,8 +71,9 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
             return (OMIM) (new OMIMJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuerySingleResult("OMIM.findByOmimId", parm);
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findById(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findById(id);
+            }
         }
         return null;
     }
@@ -90,8 +91,9 @@ public class OMIMFacadeREST extends AbstractFacade<OMIM> {
             }
         } catch (NoResultException ex) {
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneInfoById(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneInfoById(id);
+            }
         }
         return new ArrayList();
     }

@@ -29,6 +29,11 @@
         <view-id value="/datasets/geneptt.xhtml" />
     </url-mapping>
     
+    <url-mapping id="genebank">
+        <pattern value="/genebank" />
+        <view-id value="/datasets/genebank.xhtml" />
+    </url-mapping>
+    
     <url-mapping id="omim">
         <pattern value="/omim" />
         <view-id value="/datasets/omim.xhtml" />

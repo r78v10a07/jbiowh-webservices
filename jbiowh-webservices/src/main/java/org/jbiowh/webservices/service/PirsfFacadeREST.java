@@ -68,9 +68,11 @@ public class PirsfFacadeREST extends AbstractFacade<Pirsf> {
             parm.put("pIRSFnumber", id);
             return (new PirsfJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Pirsf.findByPIRSFnumber", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findByName(id);
+            }
         }
+        return new ArrayList<Pirsf>();
     }
 
     @GET
@@ -91,9 +93,11 @@ public class PirsfFacadeREST extends AbstractFacade<Pirsf> {
             }
             return p;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinByName(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinByName(id);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @Override

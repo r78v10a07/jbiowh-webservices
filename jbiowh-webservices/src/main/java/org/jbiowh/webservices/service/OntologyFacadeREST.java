@@ -76,9 +76,11 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
             parm.put("id", id);
             return (new OntologyJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("Ontology.findById", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findByGOId(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findByGOId(id);
+            }
         }
+        return new ArrayList<Ontology>();
     }
 
     @GET
@@ -97,9 +99,11 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
             }
             return listR;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findGeneInfoByGOId(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findGeneInfoByGOId(id);
+            }
         }
+        return new ArrayList<GeneInfo>();
     }
 
     @GET
@@ -118,9 +122,11 @@ public class OntologyFacadeREST extends AbstractFacade<Ontology> {
             }
             return listR;
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findProteinByGOId(id);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findProteinByGOId(id);
+            }
         }
+        return new ArrayList<Protein>();
     }
 
     @Override

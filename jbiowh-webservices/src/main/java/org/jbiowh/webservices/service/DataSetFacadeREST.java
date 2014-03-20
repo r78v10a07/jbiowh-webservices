@@ -1,5 +1,6 @@
 package org.jbiowh.webservices.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceException;
@@ -57,9 +58,11 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
             parm.put("name", name);
             return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByName", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findName(name);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findName(name);
+            }
         }
+        return new ArrayList<DataSet>();
     }
 
     @GET
@@ -71,9 +74,11 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
             parm.put("name", name);
             return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoName", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findNotName(name);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findNotName(name);
+            }
         }
+        return new ArrayList<DataSet>();
     }
 
     @GET
@@ -85,9 +90,11 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
             parm.put("status", name);
             return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByStatus", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findStatus(name);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findStatus(name);
+            }
         }
+        return new ArrayList<DataSet>();
     }
 
     @GET
@@ -99,9 +106,11 @@ public class DataSetFacadeREST extends AbstractFacade<DataSet> {
             parm.put("status", name);
             return (new DataSetJpaController(getEntityManager().getEntityManagerFactory())).useNamedQuery("DataSet.findByNoStatus", parm);
         } catch (PersistenceException ex) {
-            JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true);
-            return findNotStatus(name);
+            if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
+                return findNotStatus(name);
+            }
         }
+        return new ArrayList<DataSet>();
     }
 
     @Override
