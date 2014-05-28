@@ -4,7 +4,7 @@
 
     <groupId>org</groupId>
     <artifactId>jbiowh-webservices</artifactId>
-    <version>6.0.2</version>
+    <version>6.1.0</version>
     <packaging>war</packaging>
 
     <name>jbiowh-webservices</name>
@@ -23,12 +23,12 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
-            <version>2.2.4</version>
+            <version>2.2.6</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>4.0</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>com.ocpsoft</groupId>
@@ -44,47 +44,27 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-core</artifactId>
-            <version>6.0.2</version>
+            <version>6.1.0</version>
         </dependency>
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-persistence</artifactId>
-            <version>6.0.2</version>
+            <version>6.1.0</version>
         </dependency>        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.26</version>
+            <version>5.1.30</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>1.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>1.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-multipart</artifactId>
-            <version>1.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
-            <version>1.17.1</version>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
-            <version>2.1.0.Final</version>
+            <version>2.2.1.Final</version>
         </dependency>
     </dependencies>
 
