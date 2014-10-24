@@ -12,8 +12,14 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.apache.log4j.Logger;
+import org.jbiowh.webservices.utils.DataSetwithCount;
 import org.jbiowh.webservices.utils.JBioWHWebservicesSingleton;
 import org.jbiowhpersistence.datasets.dataset.controller.DataSetJpaController;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
@@ -35,6 +41,7 @@ import org.jbiowhpersistence.datasets.protgroup.pirsf.controller.PirsfJpaControl
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.taxonomy.controller.TaxonomyJpaController;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
+import org.jbiowhpersistence.utils.entitymanager.EntityParserFieldProxy;
 
 /**
  * This is the DataSet bean
@@ -44,6 +51,8 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 @Named(value = "dataSets")
 @SessionScoped
 public class DataSetBean implements Serializable {
+
+    private static final Logger LOG = Logger.getLogger(DataSetBean.class.getName());
 
     private HashMap parm;
 
@@ -55,17 +64,52 @@ public class DataSetBean implements Serializable {
     }
 
     @Produces
-    public List<DataSet> getDatasets() {
+    public List<DataSetwithCount> getDatasets() {
         try {
-            System.out.println("INFO: Loading datasets");
+            LOG.info("INFO: Loading datasets");
+            DataSetJpaController ctrl = new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false));
             JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).getCache().evict(DataSet.class);
-            return new DataSetJpaController(JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false)).findDataSetEntities();
+            List<DataSet> ds = ctrl.findDataSetEntities();
+
+            List<DataSetwithCount> dsc = new ArrayList();
+            for (DataSet d : ds) {
+                DataSetwithCount c = new DataSetwithCount();
+                c.setName(d.getName());
+                c.setReleaseDate(d.getReleaseDate());
+                c.setLoadDate(d.getLoadDate());
+                c.setChangeDate(d.getChangeDate());
+                c.setHomeURL(d.getHomeURL());
+                c.setApplication(d.getApplication());
+                c.setStatus(d.getStatus());
+                c.setCount(getDataSetCount(EntityParserFieldProxy.getInstance().getClassType(d.getApplication().replace("Loader", ""))));
+                dsc.add(c);
+            }
+
+            return dsc;
         } catch (PersistenceException ex) {
             if (JBioWHWebservicesSingleton.getInstance().getWHEntityManager(true).isOpen()) {
                 return getDatasets();
             }
         }
-        return new ArrayList<DataSet>();
+        return new ArrayList<DataSetwithCount>();
+    }
+
+    /**
+     * Count all DataSet entities objects
+     *
+     * @return a int with the amount of Dataset entities inserted
+     */
+    private int getDataSetCount(Class theClass) {
+        EntityManager em = JBioWHWebservicesSingleton.getInstance().getWHEntityManager(false).createEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DataSet> rt = cq.from(theClass);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
     }
 
     @Produces
