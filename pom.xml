@@ -4,7 +4,7 @@
 
     <groupId>org</groupId>
     <artifactId>jbiowh-webservices</artifactId>
-    <version>6.1.2</version>
+    <version>6.1.3</version>
     <packaging>war</packaging>
 
     <name>jbiowh-webservices</name>
@@ -44,12 +44,12 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-core</artifactId>
-            <version>6.1.2</version>
+            <version>6.1.3</version>
         </dependency>
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-persistence</artifactId>
-            <version>6.1.2</version>
+            <version>6.1.3</version>
         </dependency>        
         <dependency>
             <groupId>mysql</groupId>
